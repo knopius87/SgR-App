@@ -3,17 +3,17 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Antirassismus-Schule – Lernpfad</title>
+<title>Verlern-App – Eine Schule gegen Rassismus</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 :root{
   --r1:#FF6B6B;--r2:#FF9F43;--r3:#FFD93D;--r4:#6BCB77;--r5:#4D96FF;--r6:#C77DFF;
-  --tx:#EEF4FF;--tx2:#A8C0DD;--tx3:#607898;
-  --ok:#6BCB77;--ok2:rgba(10,45,20,.85);--ok3:#A8EDB0;
-  --err:#FF6B6B;--err2:rgba(45,13,13,.85);--err3:#FFB3B3;
-  --neu2:rgba(45,35,0,.85);--neu3:#FFF0A0;
+  --tx:#F5F8FF;--tx2:#C8D8F0;--tx3:#8AAAC8;
+  --ok:#6BCB77;--ok2:rgba(10,45,20,.85);--ok3:#C0EECA;
+  --err:#FF6B6B;--err2:rgba(45,13,13,.85);--err3:#FFD0C8;
+  --neu2:rgba(45,35,0,.85);--neu3:#FFF5B0;
   --card:rgba(10,25,55,.82);--cardb:rgba(77,150,255,.18);
 }
 body{
@@ -89,13 +89,15 @@ body{
 .bkbtn:hover{color:var(--r5)}
 
 /* PANEL */
-.panel{background:rgba(8,20,45,.9);border:1px solid rgba(77,150,255,.2);border-radius:14px;overflow:hidden}
-.phdr{background:rgba(15,30,65,.92);border-bottom:1px solid rgba(77,150,255,.15);padding:.85rem 1.25rem;display:flex;align-items:center;justify-content:space-between}
+.panel{background:rgba(8,20,45,.9);border:1px solid rgba(77,150,255,.2);border-radius:14px;overflow:hidden;display:flex;flex-direction:column}
+.phdr{background:rgba(15,30,65,.92);border-bottom:1px solid rgba(77,150,255,.15);padding:.85rem 1.25rem;display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
 .phdr h2{font-size:.9rem;font-weight:700;letter-spacing:-.01em;background:linear-gradient(90deg,var(--r5),var(--r6));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 .phdr-r{font-size:.73rem;color:var(--tx3)}
-.pbar-w{height:3px;background:rgba(255,255,255,.07)}
+.pbar-w{height:3px;background:rgba(255,255,255,.07);flex-shrink:0}
 .pbar{height:3px;background:linear-gradient(90deg,var(--r5),var(--r6),var(--r1));transition:width .3s}
-.pb{padding:1.25rem 1.35rem}
+.pb{padding:1.25rem 1.35rem 0;flex:1}
+/* Sticky action bar */
+.act-bar{position:sticky;bottom:0;background:rgba(8,20,45,.97);border-top:1px solid rgba(77,150,255,.12);padding:.85rem 1.35rem;backdrop-filter:blur(8px);flex-shrink:0}
 
 /* QUESTION */
 .qlbl{font-size:.67rem;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--tx3);margin-bottom:.45rem}
@@ -182,8 +184,8 @@ body{
 <div id="welcomeScreen" class="ws">
   <div class="ws-card">
     <div class="ws-globe">🌍</div>
-    <div class="ws-title">Antirassismus-Schule</div>
-    <div class="ws-sub">Interaktiver Lernpfad · 30 Module</div>
+    <div class="ws-title">Verlern-App</div>
+    <div class="ws-sub">Eine Schule gegen Rassismus · 30 Module</div>
     <div class="ws-quote">
       <q>Rassismus ist nicht angeboren, sondern erlernt. Und das bedeutet, dass man ihn auch wieder verlernen kann.</q>
       <cite>— Nelson Mandela</cite>
@@ -198,7 +200,7 @@ body{
 
 <div class="app" id="mainApp" style="display:none">
   <div class="hdr">
-    <div class="logo">Antirassismus-Schule<small>Interaktiver Lernpfad</small></div>
+    <div class="logo">Verlern-App<small>Eine Schule gegen Rassismus</small></div>
     <div class="hdr-r">
       <div id="userGreeting" style="font-size:.75rem;color:var(--tx3);font-family:'Inter',sans-serif"></div>
       <div class="nav-btns">
@@ -243,7 +245,8 @@ body{
     <div class="panel">
       <div class="phdr"><h2 id="mttl">Modul</h2><div class="phdr-r" id="mstp">1/5</div></div>
       <div class="pbar-w"><div class="pbar" id="pb" style="width:0%"></div></div>
-      <div class="pb" id="cb"></div>
+      <div class="pb" id="cb" style="padding-bottom:1.25rem"></div>
+      <div class="act-bar" id="actBar"></div>
     </div>
   </div>
 
@@ -389,9 +392,9 @@ M.push({t:1,n:10,title:"Wiederholung & Vertiefung",steps:[
 M.push({t:2,n:1,title:"Privileg erkennen",steps:[
 {y:"q",q:"Was sind 'Privilegien' im Kontext von Rassismus?",a:[{t:"Besondere gesetzliche Rechte für bestimmte Gruppen.",ok:0},{t:"Unsichtbare Vorteile, die bestimmte Gruppen – oft weiße Menschen – genießen, ohne dass sie diese aktiv beanspruchen müssen.",ok:1},{t:"Reichtum und sozialer Status.",ok:0}],fp:"Richtig! Das Ally-Buch erklärt: 'Die Privilegien sind so stark in unserer Welt verankert, dass wir uns ihrer nicht mehr bewusst sind. Anders gesagt: wir sind für unsere Privilegien blind.'",fn:"Privilegien im Rassismuskontext sind oft unsichtbar und unbewusst – genau deshalb müssen sie reflektiert werden."},
 {y:"q",q:"Was ist das Problem an der Aussage 'Ich sehe keine Hautfarben, ich sehe nur Menschen'?",a:[{t:"Sie ist ein perfektes antirassistisches Statement.",ok:0},{t:"Sie verleugnet die gelebte Realität von Menschen, die täglich aufgrund ihrer Hautfarbe diskriminiert werden.",ok:1},{t:"Sie ist rassistisch, weil sie Menschen nicht differenziert.",ok:0}],fp:"Gut erkannt! Diese Aussage ignoriert, dass Hautfarbe in unserer Gesellschaft eine reale gesellschaftliche Bedeutung hat. Verleugnen hilft nicht.",fn:"Farbenblindheit ist gut gemeint, aber sie verleugnet die reale Erfahrung von Diskriminierung."},
-{y:"m",q:"Was beschreibt das Rad der Privilegien? (alle richtigen wählen)",a:[{t:"Verschiedene Dimensionen von Vor- und Nachteilen in der Gesellschaft",ok:1},{t:"Je näher am Zentrum, desto mehr Macht und Ressourcen",ok:1},{t:"Eine feste Rangordnung zwischen Nationen",ok:0},{t:"Faktoren wie Hautfarbe, Religion, Geschlecht, Klasse intersektionell",ok:1}],fp:"Genau! Das Rad zeigt: Privilegien sind mehrdimensional und überschneiden sich.",fn:"Das Rad der Privilegien zeigt, wie verschiedene Faktoren zusammenwirken und Macht beeinflussen."},
+{y:"m",q:"Was sind Beispiele für gesellschaftliche Privilegien? (alle richtigen wählen)",a:[{t:"Nie wegen des eigenen Namens bei einer Bewerbung benachteiligt werden",ok:1},{t:"Sich im Alltag keine Gedanken über die eigene Hautfarbe machen müssen",ok:1},{t:"Einen Schulabschluss gemacht zu haben",ok:0},{t:"In einem Land aufgewachsen zu sein, in dem man die Landessprache als Muttersprache spricht",ok:1}],fp:"Richtig! Privilegien sind unsichtbare Vorteile – man bemerkt sie oft erst, wenn man sie nicht hat.",fn:"Privilegien sind keine Leistungen, sondern strukturelle Vorteile. Ein Schulabschluss ist eine persönliche Leistung; Privilegien sind unabhängig von Leistung vorhanden."},
 {y:"q",q:"Warum reicht es nicht, 'nicht rassistisch' zu sein?",a:[{t:"Es reicht, wenn man selbst keine rassistischen Aussagen macht.",ok:0},{t:"'Nicht-rassistisch' sein lässt das System unverändert. Antirassismus bedeutet, aktiv dagegen zu handeln.",ok:1},{t:"'Nicht rassistisch' und 'antirassistisch' bedeuten dasselbe.",ok:0}],fp:"Richtig! Das Ally-Buch erklärt: 'Nicht-rassistisch zu sein bedeutet, die Welt so zu belassen, wie sie ist. Anti-rassistisch zu sein bedeutet, das Bewusstsein nach außen zu tragen.'",fn:"Passivität erhält das System. Antirassismus ist aktiv."},
-{y:"r",q:"Mein Auftrag an mich:",pr:"Privilegien zu haben bedeutet nicht, böse zu sein – aber sie zu ignorieren, erhält das System.\n\nWähle ein konkretes Privileg, das du hast. Schreibe auf, wie du es bewusst einsetzen kannst, um andere zu unterstützen oder Rassismus zu widersprechen.",ph:"Dieses Privileg habe ich – und so werde ich es einsetzen: …"}
+{y:"r",q:"Mein Auftrag an mich:",pr:"Privilegien zu haben bedeutet nicht, böse zu sein – aber sie zu ignorieren, erhält das System.\n\nDenke an einen Vorteil, den du in deinem Leben hast, den nicht alle haben: vielleicht eine sichere Wohnung, Deutsch als Muttersprache, oder dass du nie wegen deines Aussehens kontrolliert wirst.\n\nSchreibe auf, wie du diesen Vorteil bewusst einsetzen kannst, um andere zu unterstützen oder Rassismus zu widersprechen.",ph:"Diesen Vorteil habe ich – und so werde ich ihn einsetzen: …"}
 ]});
 
 M.push({t:2,n:2,title:"Vorurteile & Gehirn",steps:[
@@ -606,14 +609,19 @@ function render(){
   document.getElementById('mstp').textContent=(curStep+1)+'/'+tot;
   document.getElementById('pb').style.width=Math.round(curStep/tot*100)+'%';
   if(curStep>=tot){finMod();return;}
-  var s=steps[curStep],b=document.getElementById('cb');
+  var s=steps[curStep];
+  var b=document.getElementById('cb');
+  var bar=document.getElementById('actBar');
   if(s.y==='q'||s.y==='quiz'){
-    b.innerHTML='<div class="qlbl">Aufgabe '+(curStep+1)+'</div><div class="qt">'+s.q+'</div>'+(s.x?'<div class="sc">'+s.x+'</div>':'')+'<div class="clist">'+s.a.map(function(c,i){return'<button class="ch" id="c'+i+'" onclick="pick('+i+')">'+c.t+'</button>';}).join('')+'</div><div id="fb"></div><div class="arow"><button class="btn" id="nb" onclick="nxt()" disabled>Weiter →</button></div>';
+    b.innerHTML='<div class="qlbl">Aufgabe '+(curStep+1)+'</div><div class="qt">'+s.q+'</div>'+(s.x?'<div class="sc">'+s.x+'</div>':'')+'<div class="clist">'+s.a.map(function(c,i){return'<button class="ch" id="c'+i+'" onclick="pick('+i+')">'+c.t+'</button>';}).join('')+'</div><div id="fb"></div>';
+    bar.innerHTML='<div class="arow"><button class="btn" id="nb" onclick="nxt()" disabled>Weiter →</button></div>';
   } else if(s.y==='m'){
     sel={};multiDone=false;
-    b.innerHTML='<div class="qlbl">Aufgabe '+(curStep+1)+'</div><div class="qt">'+s.q+'</div><div class="mhint">Mehrere Antworten möglich – alle richtigen auswählen</div><div class="clist">'+s.a.map(function(c,i){return'<button class="ch" id="c'+i+'" onclick="tog('+i+')">'+c.t+'</button>';}).join('')+'</div><div id="fb"></div><div class="arow"><button class="btn" id="nb" onclick="chkM()">Prüfen</button></div>';
+    b.innerHTML='<div class="qlbl">Aufgabe '+(curStep+1)+'</div><div class="qt">'+s.q+'</div><div class="mhint">Mehrere Antworten möglich – alle richtigen auswählen</div><div class="clist">'+s.a.map(function(c,i){return'<button class="ch" id="c'+i+'" onclick="tog('+i+')">'+c.t+'</button>';}).join('')+'</div><div id="fb"></div>';
+    bar.innerHTML='<div class="arow"><button class="btn" id="nb" onclick="chkM()">Prüfen</button></div>';
   } else {
-    document.getElementById('cb').innerHTML='<div class="qlbl">Aufgabe '+(curStep+1)+' – Mein Handlungsauftrag</div><div class="qt">'+s.q+'</div><div class="sc" style="white-space:pre-line;font-size:.85rem">'+s.pr+'</div><div class="rbox"><textarea id="rt" placeholder="'+s.ph+'"></textarea><div class="rh">Dein Auftrag an dich selbst – wird in deinen Handlungstresor gespeichert.</div></div><div class="arow"><button class="btn" id="nb" onclick="saveReflect()" disabled>In Tresor speichern →</button></div>';
+    b.innerHTML='<div class="qlbl">Aufgabe '+(curStep+1)+' – Mein Handlungsauftrag</div><div class="qt">'+s.q+'</div><div class="sc" style="white-space:pre-line;font-size:.85rem">'+s.pr+'</div><div class="rbox"><textarea id="rt" placeholder="'+s.ph+'"></textarea><div class="rh">Dein Auftrag an dich selbst – wird in deinen Handlungstresor gespeichert.</div></div>';
+    bar.innerHTML='<div class="arow"><button class="btn" id="nb" onclick="saveReflect()" disabled>In Tresor speichern →</button></div>';
     document.getElementById('rt').addEventListener('input',function(){document.getElementById('nb').disabled=this.value.trim().length<5;});
   }
 }
@@ -669,7 +677,8 @@ function finMod(){
   var k=curMod.t+'_'+curMod.n;
   done[k]=true;
   var msgs={1:'Dein Handlungsauftrag wartet im Tresor auf dich.',2:'Dein Handlungsauftrag ist gespeichert – schau ihn dir immer wieder an.',3:'Dein persönliches Versprechen liegt im Tresor. Halte es lebendig.'};
-  document.getElementById('cb').innerHTML='<div class="done"><div class="done-ic">✅</div><h2>Modul abgeschlossen!</h2><div class="schip">'+score+' Punkte gesamt</div><p>'+msgs[curMod.t]+'</p><div class="arow" style="justify-content:center"><button class="btn s" onclick="goHome()">← Zur Übersicht</button><button class="btn gold" onclick="showView(\'tresor\')">🔐 Tresor öffnen</button></div></div>';
+  document.getElementById('cb').innerHTML='<div class="done"><div class="done-ic">✅</div><h2>Modul abgeschlossen!</h2><div class="schip">'+score+' Punkte gesamt</div><p>'+msgs[curMod.t]+'</p></div>';
+  document.getElementById('actBar').innerHTML='<div class="arow" style="justify-content:center"><button class="btn s" onclick="goHome()">← Zur Übersicht</button><button class="btn gold" onclick="showView(\'tresor\')">🔐 Tresor öffnen</button></div>';
 }
 
 function checkBadges(){
