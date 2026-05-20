@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Antirassismus-Schule – Lernpfad</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --r1:#FF6B6B;--r2:#FF9F43;--r3:#FFD93D;--r4:#6BCB77;--r5:#4D96FF;--r6:#C77DFF;
+  --tx:#EEF4FF;--tx2:#A8C0DD;--tx3:#607898;
+  --ok:#6BCB77;--ok2:rgba(10,45,20,.85);--ok3:#A8EDB0;
+  --err:#FF6B6B;--err2:rgba(45,13,13,.85);--err3:#FFB3B3;
+  --neu2:rgba(45,35,0,.85);--neu3:#FFF0A0;
+  --card:rgba(10,25,55,.82);--cardb:rgba(77,150,255,.18);
+}
+body{
+  font-family:'Inter',system-ui,sans-serif;
+  background:#060D1A;color:var(--tx);
+  min-height:100vh;overflow-x:hidden;position:relative;
+  font-size:15px;line-height:1.6;
+}
+.bg{position:fixed;inset:0;z-index:0;background:radial-gradient(ellipse 60% 80% at 15% 60%,#0a2a4a,transparent 60%),radial-gradient(ellipse 50% 60% at 80% 30%,#0d3d6e,transparent 55%),linear-gradient(180deg,#060D1A,#0a1a30 50%,#060D1A)}
+.orb{position:fixed;bottom:-160px;right:-80px;width:420px;height:420px;border-radius:50%;background:radial-gradient(ellipse 55% 38% at 35% 30%,#1a6fa8,transparent 50%),radial-gradient(ellipse 38% 28% at 68% 60%,#1e8a5a,transparent 45%),radial-gradient(ellipse 44% 38% at 50% 50%,#155a9a,transparent 60%),linear-gradient(135deg,#1565c0,#0d4f8a 30%,#1b7a50 55%,#1565c0 80%);box-shadow:0 0 80px 20px rgba(30,90,180,.15),inset -25px -18px 50px rgba(0,0,20,.5);opacity:.5;z-index:0;pointer-events:none}
+#stars{position:fixed;top:0;left:0;z-index:0;pointer-events:none}
+.rbow{position:fixed;top:0;left:0;width:100%;height:4px;background:linear-gradient(90deg,var(--r1),var(--r2),var(--r3),var(--r4),var(--r5),var(--r6));z-index:10}
+.app{max-width:700px;margin:0 auto;padding:1rem 1rem 3rem;position:relative;z-index:2}
+
+/* HEADER */
+.hdr{display:flex;align-items:center;justify-content:space-between;padding:.9rem 0;border-bottom:1px solid rgba(100,150,220,.2);margin-bottom:1rem}
+.logo{font-size:1rem;font-weight:700;letter-spacing:-.02em;background:linear-gradient(90deg,var(--r5),var(--r6),var(--r1));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.logo small{display:block;font-size:.72rem;font-weight:400;color:var(--tx3);-webkit-text-fill-color:var(--tx3);margin-top:1px;letter-spacing:0}
+.hdr-r{display:flex;align-items:center;gap:.85rem}
+.pts-box{text-align:right;font-size:.72rem;color:var(--tx3)}
+.pts{font-size:1.05rem;font-weight:700;background:linear-gradient(90deg,var(--r3),var(--r2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.nav-btns{display:flex;gap:.4rem}
+.nav-btn{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:.35rem .75rem;font-size:.72rem;font-family:'Inter',sans-serif;font-weight:500;color:var(--tx3);cursor:pointer;transition:all .15s}
+.nav-btn:hover{border-color:rgba(77,150,255,.4);color:var(--tx)}
+.nav-btn.active{background:rgba(77,150,255,.15);border-color:rgba(77,150,255,.4);color:var(--r5)}
+
+/* PRIVACY */
+.pvbar{background:rgba(10,30,60,.7);border:1px solid rgba(77,150,255,.2);border-radius:8px;padding:.45rem .85rem;font-size:.73rem;color:var(--tx3);display:flex;align-items:center;gap:.5rem;margin-bottom:1rem}
+.pvdot{width:7px;height:7px;border-radius:50%;background:var(--ok);flex-shrink:0}
+
+/* WELCOME */
+.welcome{background:var(--card);border:1px solid var(--cardb);border-radius:14px;padding:1.3rem 1.5rem;margin-bottom:1rem}
+.welcome h1{font-size:1.35rem;font-weight:700;letter-spacing:-.02em;margin-bottom:.4rem;line-height:1.3}
+.welcome p{font-size:.88rem;color:var(--tx2);line-height:1.7}
+
+/* SECTION LABEL */
+.slbl{font-size:.68rem;font-weight:600;letter-spacing:.09em;text-transform:uppercase;color:var(--tx3);margin:.9rem 0 .55rem}
+
+/* THEME TABS */
+.tabs{display:flex;gap:.5rem;margin-bottom:.75rem;flex-wrap:wrap}
+.tab{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:.3rem .8rem;font-size:.75rem;font-weight:600;color:var(--tx3);cursor:pointer;transition:all .15s}
+.tab:hover{border-color:rgba(255,255,255,.25);color:var(--tx)}
+.tab.active{border:none;color:#0a0a14}
+.tab.active.t1{background:linear-gradient(90deg,var(--r5),var(--r6))}
+.tab.active.t2{background:linear-gradient(90deg,var(--r4),var(--r5))}
+.tab.active.t3{background:linear-gradient(90deg,var(--r1),var(--r2))}
+
+/* MODULE GRID */
+.mgrid{display:grid;grid-template-columns:repeat(5,1fr);gap:.5rem;margin-bottom:1rem}
+.mc{background:var(--card);border:1px solid var(--cardb);border-radius:10px;padding:.7rem .75rem;cursor:pointer;transition:border-color .18s,background .18s;position:relative;min-height:82px;display:flex;flex-direction:column}
+.mc:hover{border-color:rgba(200,120,255,.5);background:rgba(20,35,80,.88)}
+.mc.done{border-color:rgba(107,203,119,.5);background:rgba(10,40,20,.72)}
+.mc.locked{opacity:.45;cursor:not-allowed}
+.mc-n{font-size:.62rem;font-weight:600;color:var(--tx3);margin-bottom:.2rem;letter-spacing:.04em}
+.mc-t{font-size:.76rem;font-weight:600;color:var(--tx);line-height:1.3}
+.mc-pill{margin-top:auto;padding-top:.35rem;font-size:.6rem;font-weight:600;color:var(--tx3)}
+.mc.done .mc-pill{color:var(--ok3)}
+
+/* BADGES */
+.brow{display:flex;gap:.4rem;flex-wrap:wrap}
+.bdg{font-size:.7rem;font-weight:500;padding:3px 10px;border-radius:20px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.05);color:var(--tx3)}
+.bdg.e{border:none;color:#0a0a14;font-weight:700}
+.bdg.e.t1{background:linear-gradient(90deg,var(--r5),var(--r6))}
+.bdg.e.t2{background:linear-gradient(90deg,var(--r4),var(--r5))}
+.bdg.e.t3{background:linear-gradient(90deg,var(--r1),var(--r2))}
+.bdg.e.all{background:linear-gradient(90deg,var(--r1),var(--r2),var(--r3),var(--r4),var(--r5),var(--r6))}
+
+/* TIP */
+.tip{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:8px;padding:.6rem .85rem;font-size:.75rem;color:var(--tx3);margin-top:.75rem}
+
+/* BACK BTN */
+.bkbtn{display:inline-flex;align-items:center;gap:.3rem;font-size:.76rem;font-weight:500;color:var(--tx3);background:none;border:none;cursor:pointer;padding:0;margin-bottom:.8rem;transition:color .15s;font-family:'Inter',sans-serif}
+.bkbtn:hover{color:var(--r5)}
+
+/* PANEL */
+.panel{background:rgba(8,20,45,.9);border:1px solid rgba(77,150,255,.2);border-radius:14px;overflow:hidden}
+.phdr{background:rgba(15,30,65,.92);border-bottom:1px solid rgba(77,150,255,.15);padding:.85rem 1.25rem;display:flex;align-items:center;justify-content:space-between}
+.phdr h2{font-size:.9rem;font-weight:700;letter-spacing:-.01em;background:linear-gradient(90deg,var(--r5),var(--r6));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.phdr-r{font-size:.73rem;color:var(--tx3)}
+.pbar-w{height:3px;background:rgba(255,255,255,.07)}
+.pbar{height:3px;background:linear-gradient(90deg,var(--r5),var(--r6),var(--r1));transition:width .3s}
+.pb{padding:1.25rem 1.35rem}
+
+/* QUESTION */
+.qlbl{font-size:.67rem;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--tx3);margin-bottom:.45rem}
+.qt{font-size:.95rem;color:var(--tx);line-height:1.65;margin-bottom:.9rem;font-weight:500}
+.sc{background:rgba(255,255,255,.04);border-left:3px solid var(--r5);border-radius:0 8px 8px 0;padding:.7rem .95rem;margin-bottom:.85rem;font-size:.85rem;color:var(--tx2);line-height:1.65}
+.mhint{font-size:.72rem;color:var(--tx3);margin-bottom:.5rem}
+.clist{display:flex;flex-direction:column;gap:.45rem;margin-bottom:.85rem}
+.ch{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:.65rem .9rem;cursor:pointer;font-size:.84rem;font-weight:400;color:var(--tx2);line-height:1.5;transition:border-color .15s,background .15s;text-align:left;width:100%;font-family:'Inter',sans-serif}
+.ch:hover:not(:disabled){border-color:rgba(77,150,255,.5);color:var(--tx)}
+.ch.ok{border-color:var(--ok);background:var(--ok2);color:var(--ok3)}
+.ch.no{border-color:var(--err);background:var(--err2);color:var(--err3)}
+.ch.sel{border-color:rgba(199,125,255,.6);background:rgba(199,125,255,.1);color:var(--tx)}
+.ch:disabled{cursor:default}
+
+/* FEEDBACK */
+.fb{border-radius:8px;padding:.7rem .95rem;font-size:.84rem;line-height:1.65;margin-bottom:.85rem}
+.fb.pos{background:var(--ok2);border:1px solid rgba(107,203,119,.4);color:var(--ok3)}
+.fb.neg{background:var(--err2);border:1px solid rgba(255,107,107,.3);color:var(--err3)}
+.fb.neu{background:var(--neu2);border:1px solid rgba(255,217,61,.3);color:var(--neu3)}
+
+/* REFLECT */
+.rbox textarea{width:100%;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:.75rem;font-size:.85rem;font-family:'Inter',sans-serif;color:var(--tx);resize:vertical;min-height:90px;line-height:1.65;outline:none;transition:border-color .15s}
+.rbox textarea:focus{border-color:rgba(77,150,255,.5)}
+.rh{font-size:.73rem;color:var(--tx3);margin-top:.35rem;margin-bottom:.85rem}
+
+/* BUTTONS */
+.arow{display:flex;gap:.55rem;flex-wrap:wrap;align-items:center}
+.btn{border:none;border-radius:8px;padding:.58rem 1.2rem;font-size:.82rem;font-family:'Inter',sans-serif;font-weight:600;cursor:pointer;color:#060D1A;background:linear-gradient(90deg,var(--r5),var(--r6));transition:opacity .15s,transform .12s}
+.btn:hover{opacity:.85;transform:translateY(-1px)}
+.btn:disabled{opacity:.3;cursor:default;transform:none}
+.btn.s{background:transparent;color:var(--tx2);border:1px solid rgba(255,255,255,.15)}
+.btn.s:hover{background:rgba(255,255,255,.07);color:var(--tx)}
+.btn.gold{background:linear-gradient(90deg,var(--r3),var(--r2))}
+
+/* DONE */
+.done{text-align:center;padding:1.8rem 1.4rem}
+.done-ic{font-size:2.2rem;margin-bottom:.5rem}
+.done h2{font-size:1.15rem;font-weight:700;letter-spacing:-.01em;margin-bottom:.45rem;background:linear-gradient(90deg,var(--r3),var(--r4),var(--r5));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.done p{font-size:.86rem;color:var(--tx2);line-height:1.7;margin-bottom:1rem}
+.schip{display:inline-block;margin-bottom:1rem;font-weight:700;font-size:.95rem;background:linear-gradient(90deg,var(--r5),var(--r6));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+
+/* HANDLUNGSTRESOR */
+.tresor{background:var(--card);border:1px solid rgba(255,217,61,.25);border-radius:14px;overflow:hidden}
+.tresor-hdr{background:rgba(45,35,5,.9);border-bottom:1px solid rgba(255,217,61,.2);padding:.85rem 1.25rem;display:flex;align-items:center;justify-content:space-between}
+.tresor-hdr h2{font-size:.9rem;font-weight:700;background:linear-gradient(90deg,var(--r3),var(--r2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.tresor-empty{padding:1.5rem;text-align:center;color:var(--tx3);font-size:.85rem;line-height:1.7}
+.tresor-entry{border-bottom:1px solid rgba(255,255,255,.06);padding:1rem 1.25rem}
+.tresor-entry:last-child{border-bottom:none}
+.tresor-meta{font-size:.7rem;font-weight:600;color:var(--tx3);margin-bottom:.4rem;display:flex;align-items:center;gap:.5rem}
+.tresor-tag{background:rgba(255,217,61,.15);color:var(--r3);padding:2px 8px;border-radius:20px;font-size:.65rem;font-weight:600}
+.tresor-text{font-size:.85rem;color:var(--tx2);line-height:1.65;white-space:pre-wrap}
+.tresor-del{background:none;border:none;color:var(--tx3);cursor:pointer;font-size:.75rem;padding:0;transition:color .15s;margin-left:auto;font-family:'Inter',sans-serif}
+.tresor-del:hover{color:var(--err3)}
+.tresor-count{font-size:.72rem;color:var(--tx3)}
+
+/* WELCOME SCREEN */
+.ws{position:fixed;inset:0;z-index:100;display:flex;align-items:center;justify-content:center;padding:1.5rem;background:#060D1A}
+.ws-card{background:rgba(10,22,50,.92);border:1px solid rgba(77,150,255,.22);border-radius:20px;max-width:480px;width:100%;padding:2.5rem 2rem 2rem;text-align:center;box-shadow:0 24px 80px rgba(0,0,0,.5)}
+.ws-globe{font-size:3rem;margin-bottom:1rem;line-height:1;animation:ws-float 4s ease-in-out infinite}
+@keyframes ws-float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+.ws-title{font-size:1.45rem;font-weight:700;letter-spacing:-.02em;margin-bottom:.25rem;background:linear-gradient(90deg,var(--r5),var(--r6),var(--r1));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.ws-sub{font-size:.82rem;color:var(--tx3);margin-bottom:1.75rem}
+.ws-quote{background:rgba(255,255,255,.04);border-left:3px solid var(--r4);border-radius:0 10px 10px 0;padding:.9rem 1.1rem;margin-bottom:1.75rem;text-align:left}
+.ws-quote q{font-size:.92rem;color:var(--tx2);line-height:1.7;font-style:italic;quotes:none}
+.ws-quote cite{display:block;margin-top:.5rem;font-size:.75rem;color:var(--tx3);font-style:normal;font-weight:600}
+.ws-label{font-size:.72rem;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--tx3);margin-bottom:.5rem;text-align:left}
+.ws-input{width:100%;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:9px;padding:.75rem 1rem;font-size:.95rem;font-family:'Inter',sans-serif;color:var(--tx);outline:none;transition:border-color .15s;margin-bottom:.4rem}
+.ws-input:focus{border-color:rgba(77,150,255,.55)}
+.ws-hint{font-size:.73rem;color:var(--tx3);text-align:left;margin-bottom:1.25rem;line-height:1.5}
+.ws-btn{width:100%;border:none;border-radius:9px;padding:.75rem 1rem;font-size:.92rem;font-family:'Inter',sans-serif;font-weight:700;cursor:pointer;color:#060D1A;background:linear-gradient(90deg,var(--r5),var(--r6));transition:opacity .15s,transform .12s;margin-bottom:.65rem}
+.ws-btn:hover{opacity:.85;transform:translateY(-1px)}
+.ws-btn:disabled{opacity:.3;cursor:default;transform:none}
+.ws-skip{font-size:.75rem;color:var(--tx3);cursor:pointer;background:none;border:none;font-family:'Inter',sans-serif;transition:color .15s;padding:0}
+.ws-skip:hover{color:var(--tx2)}
+.ws-greeting{font-size:.8rem;color:var(--tx3);margin-left:.3rem}
+</style>
+</head>
+<body>
+<div class="bg"></div>
+<div class="orb"></div>
+<canvas id="stars"></canvas>
+<div class="rbow"></div>
+
+<div id="welcomeScreen" class="ws">
+  <div class="ws-card">
+    <div class="ws-globe">🌍</div>
+    <div class="ws-title">Antirassismus-Schule</div>
+    <div class="ws-sub">Interaktiver Lernpfad · 30 Module</div>
+    <div class="ws-quote">
+      <q>Rassismus ist nicht angeboren, sondern erlernt. Und das bedeutet, dass man ihn auch wieder verlernen kann.</q>
+      <cite>— Nelson Mandela</cite>
+    </div>
+    <div class="ws-label">Dein Pseudonym</div>
+    <input class="ws-input" id="wsInput" type="text" maxlength="30" placeholder="z.B. Stern, Kompass, Horizont …" autocomplete="off" spellcheck="false">
+    <div class="ws-hint">Kein echter Name nötig – wähle irgendetwas, das sich für dich gut anfühlt. Das Pseudonym bleibt nur auf diesem Gerät.</div>
+    <button class="ws-btn" id="wsBtn" onclick="startApp()" disabled>Lernpfad starten →</button>
+    <button class="ws-skip" onclick="startApp(true)">Ohne Pseudonym fortfahren</button>
+  </div>
+</div>
+
+<div class="app" id="mainApp" style="display:none">
+  <div class="hdr">
+    <div class="logo">Antirassismus-Schule<small>Interaktiver Lernpfad</small></div>
+    <div class="hdr-r">
+      <div id="userGreeting" style="font-size:.75rem;color:var(--tx3);font-family:'Inter',sans-serif"></div>
+      <div class="nav-btns">
+        <button class="nav-btn active" id="nb-home" onclick="showView('home')">Module</button>
+        <button class="nav-btn" id="nb-tresor" onclick="showView('tresor')">🔐 Tresor</button>
+      </div>
+      <div class="pts-box"><div class="pts" id="pts">0</div>Punkte</div>
+    </div>
+  </div>
+  <div class="pvbar"><div class="pvdot"></div><span>Datenschutz: Alle Daten bleiben nur in diesem Browserfenster. Nichts wird gespeichert oder übertragen.</span></div>
+
+  <!-- HOME -->
+  <div id="vHome">
+    <div class="welcome">
+      <h1>Was hat Rassismus mit mir zu tun?</h1>
+      <p>30 Module in drei Themenbereichen – Erkennen, Reflektieren und Handeln. Deine persönlichen Gedanken wandern in deinen privaten Handlungstresor.</p>
+    </div>
+
+    <div class="slbl">Themenbereich wählen</div>
+    <div class="tabs">
+      <div class="tab active t1" id="tab1" onclick="setTab(1)">🔍 Erkennen (10)</div>
+      <div class="tab t2" id="tab2" onclick="setTab(2)">💬 Reflektieren (10)</div>
+      <div class="tab t3" id="tab3" onclick="setTab(3)">✊ Handeln (10)</div>
+    </div>
+
+    <div class="slbl" id="themeLabel">Modul wählen – Thema: Erkennen</div>
+    <div class="mgrid" id="modGrid"></div>
+
+    <div class="slbl">Abzeichen</div>
+    <div class="brow">
+      <div class="bdg t1" id="ba1">🏅 Erkenner*in</div>
+      <div class="bdg t2" id="ba2">🏅 Nachdenker*in</div>
+      <div class="bdg t3" id="ba3">🏅 Couragierte*r</div>
+      <div class="bdg all" id="ba4">🌈 Vollständig</div>
+    </div>
+    <div class="tip" id="htip">Tipp: Starte mit Modul 1 im Bereich Erkennen.</div>
+  </div>
+
+  <!-- MODULE SCREEN -->
+  <div id="vMod" style="display:none">
+    <button class="bkbtn" onclick="goHome()">← Zurück zur Übersicht</button>
+    <div class="panel">
+      <div class="phdr"><h2 id="mttl">Modul</h2><div class="phdr-r" id="mstp">1/5</div></div>
+      <div class="pbar-w"><div class="pbar" id="pb" style="width:0%"></div></div>
+      <div class="pb" id="cb"></div>
+    </div>
+  </div>
+
+  <!-- HANDLUNGSTRESOR -->
+  <div id="vTresor" style="display:none">
+    <div class="welcome" style="margin-bottom:1rem">
+      <h1>🔐 Handlungstresor</h1>
+      <p>Dein privater Raum für Handlungsaufträge an dich selbst. Hier landen alle persönlichen Vorsätze, Versprechen und Strategien aus den Modulen – Dinge, die dich zu einem besseren Menschen machen. Nur du siehst sie, und nur solange dieses Fenster offen ist.</p>
+    </div>
+    <div class="tresor">
+      <div class="tresor-hdr">
+        <h2 id="tresorOwner">Meine Einträge</h2>
+        <span class="tresor-count" id="tresorCount">0 Einträge</span>
+      </div>
+      <div id="tresorEntries">
+        <div class="tresor-empty" id="tresorEmpty">Noch keine Einträge. Schließe die Handlungsaufgaben in den Modulen ab – deine persönlichen Vorsätze und Versprechen an dich selbst erscheinen hier.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── WELCOME SCREEN ──
+var pseudonym='';
+
+(function(){
+  var inp=document.getElementById('wsInput');
+  var btn=document.getElementById('wsBtn');
+  inp.addEventListener('input',function(){
+    btn.disabled=this.value.trim().length<2;
+  });
+  inp.addEventListener('keydown',function(e){
+    if(e.key==='Enter'&&this.value.trim().length>=2)startApp();
+  });
+})();
+
+function startApp(skip){
+  var inp=document.getElementById('wsInput');
+  pseudonym=skip?'':(inp.value.trim()||'');
+  document.getElementById('welcomeScreen').style.display='none';
+  document.getElementById('mainApp').style.display='';
+  if(pseudonym){
+    document.getElementById('userGreeting').textContent='Hallo, '+pseudonym+' 👋';
+  }
+}
+
+// ── APP STATE ──
+(function(){var c=document.getElementById('stars');c.width=window.innerWidth;c.height=window.innerHeight;var ctx=c.getContext('2d');for(var i=0;i<180;i++){var x=Math.random()*c.width,y=Math.random()*c.height,r=Math.random()*1.2+.2,a=Math.random()*.7+.15;ctx.beginPath();ctx.arc(x,y,r,0,Math.PI*2);ctx.fillStyle='rgba(200,220,255,'+a+')';ctx.fill();}})();
+
+// State
+var score=0,curMod=0,curStep=0,done={},tresor=[],curTab=1,sel={},multiDone=false;
+// done: key "t_n" e.g. "1_1"
+
+// Themes labels
+var themeNames={1:"Erkennen",2:"Reflektieren",3:"Handeln"};
+
+// ALL 30 MODULES
+// Format: {t:themeId, n:modNum, title, steps:[{y,q,x?,a?,fp?,fn?,pr?,ph?}]}
+var M=[];
+
+// ===== THEMA 1: ERKENNEN (Module 1-10) =====
+M.push({t:1,n:1,title:"Was ist Rassismus?",steps:[
+{y:"q",q:"Was unterscheidet Rassismus von einem gewöhnlichen Vorurteil?",a:[{t:"Rassismus ist schlimmer, weil er laut geäußert wird.",ok:0},{t:"Rassismus hat immer eine Machtkomponente – er bestimmt, wer Zugang zu Ressourcen, Rechten und Würde erhält.",ok:1},{t:"Vorurteile sind immer schlimmer als Rassismus.",ok:0}],fp:"Richtig! Wie das Arbeitsheft der Königin-Luise-Schule erklärt: 'Rassismus entscheidet mit darüber, wer was davon bekommen soll – Geld, Arbeit, Wohnraum, kulturelle und politische Teilhabe.'",fn:"Rassismus ist kein bloßes Vorurteil. Er ist mit gesellschaftlicher Macht verbunden und bestimmt, wer Zugang zu Rechten und Ressourcen erhält."},
+{y:"q",q:"Wann entstand der Begriff 'Rasse' als ideologisches Konzept?",a:[{t:"Er ist seit der Antike bekannt und war schon immer Teil der Wissenschaft.",ok:0},{t:"Er entstand im 18./19. Jahrhundert und wurde durch Kolonialismus und Imperialismus zur politischen Ideologie.",ok:1},{t:"Er wurde erst im 20. Jahrhundert durch die Nationalsozialisten erfunden.",ok:0}],fp:"Genau! Hannah Arendt zeigte: Die Ursprünge des Rassebegriffs liegen im 18. Jahrhundert; im 19. wird er 'zur einheitlichen Ideologie aller imperialistischen Politik'.",fn:"Der Rassebegriff entstand im 18./19. Jahrhundert und diente zur Rechtfertigung von Kolonialismus und Imperialismus."},
+{y:"m",q:"Was ist laut moderner Wissenschaft über biologische 'Rassen' beim Menschen richtig? (alle richtigen wählen)",a:[{t:"Es gibt keine signifikanten genetischen Unterschiede, die 'Rassen' begründen.",ok:1},{t:"'Rasse' ist ein politisch-historisches Konstrukt, keine biologische Tatsache.",ok:1},{t:"Wissenschaftler*innen sind sich uneinig darüber.",ok:0},{t:"Die Daten zeigen eindeutig: bei Menschen gibt es keine Rassen.",ok:1}],fp:"Sehr gut! Alle drei Texte stimmen überein: 'Rasse' ist eine Erfindung. Wie Vanessa Vu schreibt: 'Rassismus ist kein menschlicher Defekt – er ist eine Erfindung der Menschen.'",fn:"Die Wissenschaft ist eindeutig: Es gibt keine biologischen Rassen beim Menschen. Das ist kein offenes wissenschaftliches Thema."},
+{y:"q",q:"Was beschreibt das Bild der 'Schubladen im Regal' aus dem Arbeitsheft der Königin-Luise-Schule?",x:"'Rassismus ist dieses erfundene Regal, das Menschen Schubladen zuordnet und diese Schubladen sortiert, so dass der Eindruck entsteht, dass einige Menschen höherwertig sind als andere.'",a:[{t:"Es beschreibt ein Ordnungssystem für Kulturen.",ok:0},{t:"Es zeigt, wie Rassismus Menschen hierarchisch sortiert und bestimmten Gruppen Minderwertigkeit zuschreibt.",ok:1},{t:"Es erklärt, wie das Gehirn Informationen speichert.",ok:0}],fp:"Richtig! Das Bild verdeutlicht: Rassismus ist keine natürliche Ordnung, sondern eine erfundene Hierarchie.",fn:"Das 'Schubladen-Regal'-Bild zeigt, wie Rassismus künstlich eine Hierarchie konstruiert – mit den Erfinder*innen selbst oben."},
+{y:"r",q:"Mein Auftrag an mich:",pr:"Rassismus ist erlernt – das bedeutet, er ist veränderbar. Und die Veränderung beginnt bei mir selbst.\n\nSchreibe einen konkreten Satz, was du ab heute in deinem Denken oder Handeln verändern möchtest. Nicht: was andere tun sollen – sondern: was ich selbst tue.",ph:"Ab heute werde ich…"}
+]}); 
+
+M.push({t:1,n:2,title:"Alltagsrassismus",steps:[
+{y:"q",q:"Was ist Alltagsrassismus?",a:[{t:"Rassismus, der nur in Extremfällen vorkommt.",ok:0},{t:"Alle Formen der Diskriminierung und Ausgrenzung im normalen alltäglichen Miteinander – von Nichtbeachtung bis zu verbalen Übergriffen.",ok:1},{t:"Rassismus, den nur Ausländer*innen erfahren.",ok:0}],fp:"Richtig! Alltagsrassismus reicht von Nichtbeachtung über Distanzlosigkeit bis zur selbstverständlichen Inanspruchnahme von Privilegien.",fn:"Alltagsrassismus ist jede Form der Diskriminierung im normalen Alltag – auch kleine, oft unsichtbare Formen zählen."},
+{y:"quiz",q:"Ein Mann wird auf Wohnungssuche trotz guter Bonität mehrfach abgelehnt. Sein Nachbar mit deutschem Namen bekommt sofort eine Wohnung. Worum handelt es sich?",a:[{t:"Um Pech – das passiert jedem.",ok:0},{t:"Um Alltagsrassismus – er wird aufgrund seines Namens oder Aussehens benachteiligt.",ok:1},{t:"Um strukturellen Staatsrassismus.",ok:0}],fp:"Genau! Das Arbeitsheft nennt genau dieses Beispiel: 'bei der Wohnungs- und Ausbildungsplatzsuche – Menschen mit deutsch klingendem Namen bekommen viel wahrscheinlicher einen Platz als andere.'",fn:"Das ist ein klassisches Beispiel für Alltagsrassismus – Menschen werden aufgrund ihres Namens oder Aussehens diskriminiert."},
+{y:"m",q:"Wo tritt Alltagsrassismus auf? (alle richtigen wählen)",a:[{t:"In Kinderbüchern und Schulbüchern",ok:1},{t:"Bei der Wohnungs- und Jobsuche",ok:1},{t:"In sozialen Medien und Memes",ok:1},{t:"Nur in rechtsextremen Kreisen",ok:0}],fp:"Richtig! Alltagsrassismus ist überall präsent – in Sprache, Bildern, Institutionen und Medien.",fn:"Alltagsrassismus zeigt sich in vielen Lebensbereichen, nicht nur in offensichtlichen Fällen."},
+{y:"q",q:"Warum erkennen viele weiße Deutsche Alltagsrassismus nicht?",a:[{t:"Weil sie ihn selbst nie erleben und deshalb für ihn blind sind.",ok:1},{t:"Weil Alltagsrassismus selten vorkommt.",ok:0},{t:"Weil es keine zuverlässigen Definitionen gibt.",ok:0}],fp:"Sehr gut! Wie das Arbeitsheft erklärt: 'Nur weil wir ihn nicht sehen, heißt es nicht, dass es ihn nicht gibt – sondern nur, dass wir ihn nicht erleiden.'",fn:"Wer Rassismus nicht selbst erlebt, ist oft blind dafür. Das Erleben ist aber trotzdem real."},
+{y:"r",q:"Mein Auftrag an mich:",pr:"Alltagsrassismus bleibt oft unsichtbar, weil wir ihn als 'normal' akzeptieren.\n\nWelche eine Gewohnheit in deinem Alltag möchtest du bewusst hinterfragen? Schreibe auf, was du konkret anders machen willst – in Sprache, Verhalten oder Haltung.",ph:"Diese Gewohnheit will ich bewusst hinterfragen und verändern…"}
+]});
+
+M.push({t:1,n:3,title:"Struktureller Rassismus",steps:[
+{y:"q",q:"Was unterscheidet strukturellen Rassismus von Alltagsrassismus?",a:[{t:"Struktureller Rassismus ist weniger schlimm.",ok:0},{t:"Struktureller Rassismus entsteht durch Regeln und Abläufe von Institutionen – auch wenn keine einzelne Person bewusst rassistisch handelt.",ok:1},{t:"Struktureller Rassismus betrifft nur Behörden.",ok:0}],fp:"Richtig! Beim strukturellen Rassismus reicht es nicht aus, dass Einzelpersonen 'nett' sind – wenn das System selbst ungleiche Ergebnisse produziert, ist es rassistisch.",fn:"Struktureller Rassismus steckt in Regeln und Systemen, nicht nur in einzelnen bösen Absichten."},
+{y:"q",q:"Was ist 'Racial Profiling'?",x:"'Kontrolle ohne Grund von Personen allein aufgrund ihres physischen Erscheinungsbildes, oft geprägt von rassistischen Vorurteilen.'",a:[{t:"Eine Methode zur effizienteren Verbrechensbekämpfung.",ok:0},{t:"Systematische Diskriminierung, bei der Menschen aufgrund ihrer Hautfarbe oder Erscheinung unverhältnismäßig kontrolliert werden.",ok:1},{t:"Eine Statistikmethode der Polizei.",ok:0}],fp:"Genau! Racial Profiling ist eine Form strukturellen Rassismus – Polizeikontrollen sollten auf konkreten Verdacht basieren, nicht auf Hautfarbe.",fn:"Racial Profiling bedeutet: Menschen werden aufgrund ihrer Hautfarbe kontrolliert, nicht wegen eines konkreten Verdachts. Das ist Diskriminierung."},
+{y:"m",q:"Welche sind Beispiele für strukturellen Rassismus? (alle richtigen wählen)",a:[{t:"Bewerbungen mit nicht-deutschen Namen werden seltener eingeladen",ok:1},{t:"Schwarze Menschen sind in deutschen Gefängnissen überrepräsentiert",ok:1},{t:"Eine Polizistin sagt einmalig etwas Rassistisches",ok:0},{t:"Schulen in bestimmten Stadtteilen sind systematisch schlechter ausgestattet",ok:1}],fp:"Gut! Struktureller Rassismus zeigt sich in Mustern und Systemen, nicht nur in einzelnen Vorfällen.",fn:"Struktureller Rassismus zeigt sich in systematischen Ungleichheiten, nicht nur in einzelnen Aussagen."},
+{y:"q",q:"Was meint das Arbeitsheft mit 'Privilegien für weiße Deutsche'?",a:[{t:"Weiße Deutsche haben offizielle Sonderrechte im Grundgesetz.",ok:0},{t:"Sie müssen sich und ihre Herkunft nicht erklären oder rechtfertigen – das ist ein unsichtbares Privileg.",ok:1},{t:"Es gibt keine Privilegien für weiße Deutsche.",ok:0}],fp:"Richtig! 'In Deutschland schafft Rassismus vielfältige Privilegien für weiße Deutsche, weil diese sich als normal verstehen dürfen und keinen Rassismus erleben.'",fn:"Das Privileg ist oft unsichtbar: weiße Deutsche müssen sich nicht ständig erklären oder rechtfertigen – das ist ein echtes, aber oft unbemerktes Privileg."},
+{y:"r",q:"Mein Auftrag an mich:",pr:"Struktureller Rassismus entsteht, wenn niemand widerspricht – und verändert sich, wenn Menschen aktiv werden.\n\nWelche eine Regel, Praxis oder Gewohnheit in deiner Schule oder deinem Umfeld möchtest du aktiv ansprechen oder verändern? Schreibe auf, was du tun wirst und an wen du dich wendest.",ph:"Diese Praxis werde ich ansprechen und so vorgehen…"}
+]});
+
+M.push({t:1,n:4,title:"Kulturrassismus & moderne Formen",steps:[
+{y:"q",q:"Was ist 'Kulturrassismus' oder 'Ethnopluralismus'?",a:[{t:"Die Ansicht, dass alle Kulturen gleich sind.",ok:0},{t:"Eine Form des Rassismus, die 'Rasse' durch 'Kultur', 'Volk' oder 'Ethnie' ersetzt – aber dieselbe Ausgrenzungslogik beibehält.",ok:1},{t:"Eine neue Toleranzbewegung.",ok:0}],fp:"Genau! Das Ally-Arbeitsbuch erklärt: Rechtspopulisten sprechen von 'Ethnopluralismus' statt von 'Rassen' – meinen aber dasselbe: Verschiedenheit soll Trennung bedeuten.",fn:"Kulturrassismus ersetzt das Wort 'Rasse' durch 'Kultur' oder 'Volk' – die Ausgrenzungslogik bleibt gleich."},
+{y:"q",q:"Wie funktioniert moderner Rassismus ohne das Wort 'Rasse'?",x:"'Nicht mehr von Rassen die Rede, sondern von Völkern, Ethnien oder Kulturen – die aber mit einem Lebensraum verbunden werden und sich keinesfalls mischen sollen.' (Ally-Buch)",a:[{t:"Er funktioniert gar nicht ohne den Begriff 'Rasse'.",ok:0},{t:"Er verwendet kulturelle und religiöse Zuschreibungen, die als quasi-natürlich dargestellt werden – damit dieselbe Hierarchie reproduziert wird.",ok:1},{t:"Er ist harmloser als klassischer Rassismus.",ok:0}],fp:"Richtig! 'Damit wird nur der Begriff Rasse durch Kultur oder Volk ausgetauscht.' Die Logik der Abwertung bleibt identisch.",fn:"Moderner Rassismus tauscht Begriffe aus, behält aber die Logik der Hierarchie und Ausgrenzung bei."},
+{y:"m",q:"Welche Aussagen sind Beispiele für Kulturrassismus? (alle richtigen wählen)",a:[{t:"'Die können sich halt nicht integrieren.'",ok:1},{t:"'Muslime passen nicht zu unseren Werten.'",ok:1},{t:"'Ich finde viele Kulturen interessant.'",ok:0},{t:"'Warum kommen immer mehr Ausländer – Deutschland ist voll.'",ok:1}],fp:"Genau! Diese Aussagen klingen sachlich, reproduzieren aber dieselbe Ausgrenzungslogik wie biologischer Rassismus.",fn:"Kulturrassismus ist oft schwer zu erkennen, weil er 'sachlich' klingt. Aber Zuschreibungen über ganze Gruppen und Forderungen nach Trennung sind sein Kern."},
+{y:"q",q:"Was bedeutet der Begriff 'Ausländerfeindlichkeit' und warum ist er problematisch?",a:[{t:"Er ist ein präziser wissenschaftlicher Begriff.",ok:0},{t:"Er verschleiert, dass es in Wirklichkeit um Rassismus geht – denn betroffen sind auch nicht-weiße Deutsche, keine Ausländer.",ok:1},{t:"Er ist ein guter alternativer Begriff für Rassismus.",ok:0}],fp:"Richtig! Das Ally-Arbeitsbuch betont: Rassismus trifft auch Menschen, die hier geboren sind – also nicht-weiße Deutsche. Der Begriff 'Ausländerfeindlichkeit' vernebelt das.",fn:"'Ausländerfeindlichkeit' klingt nach Pass-Problem – tatsächlich geht es aber um Hautfarbe und Erscheinung, also Rassismus."},
+{y:"r",q:"Mein Auftrag an mich:",pr:"Wenn ich eine verkleidete rassistische Formulierung höre, möchte ich nicht mehr schweigen.\n\nSchreibe einen Satz, den du ab heute sagen kannst, wenn du eine solche Aussage hörst – ruhig, klar, ohne Angriff. Übe ihn, bis er sich natürlich anfühlt.",ph:"Meinen Satz für diese Momente habe ich mir überlegt: …"}
+]});
+
+M.push({t:1,n:5,title:"Kolonialismus & seine Folgen",steps:[
+{y:"q",q:"Was bedeutet Kolonialismus?",a:[{t:"Eine Handelsbeziehung zwischen gleichen Partnern.",ok:0},{t:"Die Unterwerfung und Ausbeutung von Ländern und Menschen durch eine Macht – oft durch Gewalt und unfaire Mittel.",ok:1},{t:"Ein mittelalterliches Phänomen ohne heutige Relevanz.",ok:0}],fp:"Richtig! Das Ally-Buch erklärt: 'Kolonisation bedeutet, dass eine Gruppe mit Macht eine andere Gruppe kleiner macht als sie ist, oft durch Gewalt oder mit unfairen Mitteln.'",fn:"Kolonialismus war systematische Ausbeutung und Unterwerfung – keine gleichberechtigte Partnerschaft."},
+{y:"q",q:"Wann endete Kolonialismus offiziell – und was bedeutet das?",a:[{t:"Er endete vollständig mit dem Zweiten Weltkrieg.",ok:0},{t:"Europäische Staaten gaben Kolonien erst nach 1945 schrittweise auf. Die wirtschaftlichen und sozialen Folgen wirken bis heute nach.",ok:1},{t:"Er endete im 18. Jahrhundert.",ok:0}],fp:"Genau! Das Ally-Buch betont: 'Diese Beziehung endete niemals wirklich.' Länder blieben ihrer Ressourcen beraubt zurück.",fn:"Kolonialismus endete nicht mit einer Unabhängigkeitserklärung. Jahrhundertelange Ausbeutung hinterlässt Wunden, die bis heute spürbar sind."},
+{y:"m",q:"Was waren Folgen des transatlantischen Sklavenhandels? (alle richtigen wählen)",a:[{t:"Die Traumata versklavter Menschen wirken generationsübergreifend nach.",ok:1},{t:"Er hat zur Entstehung heutiger wirtschaftlicher Ungleichheiten beigetragen.",ok:1},{t:"Er hat keine Verbindung zur Gegenwart.",ok:0},{t:"Er rechtfertigte sich durch angeblich 'wissenschaftliche' Rassentheorien.",ok:1}],fp:"Richtig! Das Ally-Buch: 'Das Erbe der Versklavung ist die fortdauernde systematische Unterdrückung von BIPoC... die alltägliche Normalität rassistischer Einstellungen.'",fn:"Der Sklavenhandel hat tiefe und lange nachwirkende Folgen für Millionen Menschen hinterlassen."},
+{y:"q",q:"Was beschreibt 'White Saviourism'?",a:[{t:"Eine positive Form der Entwicklungshilfe.",ok:0},{t:"Das Muster, wonach weiße Menschen 'helfen' – ohne die Wurzeln der Ungleichheit zu hinterfragen oder eigene Privilegien aufzugeben.",ok:1},{t:"Ein Begriff für rassistische Ideologie.",ok:0}],fp:"Gut erkannt! Das Ally-Buch: 'Gutmeinende Menschen wollen retten, statt den kolonisierten Menschen ihre Macht zurückzugeben und die eigenen Privilegien aufzugeben.'",fn:"White Saviourism klingt gut gemeint, reproduziert aber Machtverhältnisse – es geht ums Retten statt ums Gleich-Behandeln."},
+{y:"r",q:"Mein Auftrag an mich:",pr:"Das Erbe des Kolonialismus ist nicht nur Geschichte – es prägt, wer heute Chancen hat und wer nicht.\n\nWas kannst du konkret tun, um diese Ungleichheit nicht zu reproduzieren? Schreibe einen persönlichen Vorsatz: in deiner Sprache, in deinem Konsum, in deiner Haltung.",ph:"Um Ungleichheit nicht zu reproduzieren, werde ich…"}
+]});
+
+M.push({t:1,n:6,title:"Sprache & rassistische Begriffe",steps:[
+{y:"q",q:"Warum sind manche alltäglichen Wörter rassistisch?",a:[{t:"Sie sind es nur, wenn sie in beleidigender Absicht gesagt werden.",ok:0},{t:"Sie transportieren rassistische Weltbilder und koloniales Gedankengut, auch wenn der*die Sprechende das nicht beabsichtigt.",ok:1},{t:"Sie sind es nur, wenn sie von anderen als rassistisch empfunden werden.",ok:0}],fp:"Richtig! Die Wirkung ist entscheidend, nicht die Absicht. Sprache transportiert Geschichte – auch wenn wir das nicht wollen.",fn:"Rassistische Sprache wirkt durch ihre Geschichte und Bedeutung, nicht nur durch die Absicht der sprechenden Person."},
+{y:"m",q:"Welche Begriffe haben eine rassistische oder koloniale Geschichte? (alle richtigen wählen)",a:[{t:"Mohrenstraße als Straßenname",ok:1},{t:"'Entwicklungsland'",ok:1},{t:"'Migrant*in'",ok:0},{t:"'Zigeuner' für Sinti und Roma",ok:1}],fp:"Richtig! Viele alltägliche Begriffe stammen aus einer Zeit, in der Rassismus als normal galt. Sie reproduzieren diese Vorstellungen.",fn:"'Migrant*in' ist ein neutraler Begriff. Die anderen haben eine Geschichte der Abwertung."},
+{y:"q",q:"Was sollte laut bpb im Umgang mit diskriminierenden Begriffen in historischen Quellen passieren?",a:[{t:"Alte Quellen sollen einfach umgeschrieben werden.",ok:0},{t:"Diskriminierende Begriffe in historischen Quellen sollen benannt und historisch eingeordnet werden – nicht einfach übernommen.",ok:1},{t:"Historische Quellen müssen wortwörtlich gelesen werden.",ok:0}],fp:"Genau! Der historische Kontext muss erklärt werden – das ist der Unterschied zwischen historischer Analyse und unreflektierter Reproduktion.",fn:"Historische Begriffe müssen kontextualisiert werden, nicht unkritisch übernommen."},
+{y:"q",q:"Was ist das Problem mit sogenannten 'positiven' rassistischen Stereotypen?",a:[{t:"Sie sind harmlos, weil sie niemanden beleidigen.",ok:0},{t:"Auch 'positive' Stereotypen sind Rassismus – sie schreiben Gruppen biologische Eigenschaften zu und werten individuelle Leistungen ab.",ok:1},{t:"Sie sind nur dann problematisch, wenn jemand sie verletzend findet.",ok:0}],fp:"Richtig! Das Ally-Buch betont: Positiver Rassismus ist nicht weniger Rassismus. Er kategorisiert, reduziert und schadet – auch ohne böse Absicht.",fn:"'Positive' Stereotypen sind trotzdem Rassismus: Sie schreiben Eigenschaften biologisch zu und nehmen Individuen ihre Eigenständigkeit."},
+{y:"r",q:"Mein Auftrag an mich:",pr:"Sprache forme ich täglich neu – durch das, was ich sage und durch das, was ich nicht mehr sage.\n\nWähle eine konkrete sprachliche Gewohnheit, die du ab heute verändern möchtest. Schreibe auf, welches Wort oder welche Redewendung du weglässt – und was du stattdessen sagst.",ph:"Dieses Wort lasse ich weg und ersetze es durch…"}
+]});
+
+M.push({t:1,n:7,title:"Das Konzept 'Wir' und 'Die'",steps:[
+{y:"q",q:"Was ist 'Othering'?",a:[{t:"Ein sozialpädagogisches Programm.",ok:0},{t:"Das Konstruieren von Menschen als dauerhaft 'fremd' und 'nicht zugehörig' – oft unbewusst, um die eigene Gruppe aufzuwerten.",ok:1},{t:"Eine Form des Cybermobbing.",ok:0}],fp:"Genau! Die bpb erklärt: 'Othering verdeutlicht, wie Identitäten durch Gruppenvergleich hergestellt werden, wobei die eigene Gruppe als höherwertig gilt.'",fn:"Othering bezeichnet die (oft unbewusste) Konstruktion von 'den Anderen' als fremd und minderwertig."},
+{y:"q",q:"Wie konstruiert Rassismus 'Wir' und 'Die' Gruppen?",x:"'Die Konstruktion von Rassismus geschieht nach dem binären Konzept von zugehörig – nicht zugehörig.' (bpb)",a:[{t:"Indem er objektive biologische Unterschiede beschreibt.",ok:0},{t:"Indem er Zuschreibungen verallgemeinert, als natürlich darstellt und eine Gruppe als überlegen, die andere als minderwertig definiert.",ok:1},{t:"Indem er Menschen nach ihrer Nationalität einteilt.",ok:0}],fp:"Richtig! Rassismus konstruiert Gruppen künstlich und wertet eine ab. Diese Konstruktion ist Ideologie, keine Biologie.",fn:"Rassistische Gruppen-Konstruktion ist eine Ideologie, keine Naturtatsache."},
+{y:"m",q:"Was zeigt das Othering-Konzept? (alle richtigen wählen)",a:[{t:"In der Abgrenzung von 'den Anderen' konstruieren wir auch unsere eigene Identität.",ok:1},{t:"Die Unterschiede erscheinen oft rückständig oder bedrohlich.",ok:1},{t:"Othering ist nur ein Problem rechtsextremer Gruppen.",ok:0},{t:"Menschen haben viele verschiedene Zugehörigkeiten gleichzeitig.",ok:1}],fp:"Sehr gut! Identität entsteht immer durch Vergleich. Das birgt die Gefahr der Abwertung anderer.",fn:"Othering betrifft alle gesellschaftlichen Gruppen, nicht nur extreme."},
+{y:"q",q:"Wie kann man Othering-Prozessen begegnen?",a:[{t:"Indem man keine Unterschiede mehr wahrnimmt.",ok:0},{t:"Indem man Unterschiede wahrnimmt, aber nicht bewertet – und die Vielfalt der Zugehörigkeiten jedes Menschen anerkennt.",ok:1},{t:"Indem man sich nur noch mit Menschen umgibt, die einem ähnlich sind.",ok:0}],fp:"Genau! Unterschiede sind real – aber sie zu hierarchisieren ist die Entscheidung, die Rassismus ausmacht.",fn:"Unterschiede wahrzunehmen ist normal. Das Problem ist ihre Bewertung und Hierarchisierung."},
+{y:"r",q:"Mein Auftrag an mich:",pr:"Othering passiert oft unbewusst – ich kann es durch achtsames Innehalten unterbrechen.\n\nSchreibe eine konkrete Regel für dich selbst: Wie willst du in Zukunft reagieren, wenn du merkst, dass du jemanden unbewusst als 'fremd' oder 'nicht zugehörig' wahrnimmst?",ph:"Wenn ich merke, dass ich jemanden 'othering', werde ich…"}
+]});
+
+M.push({t:1,n:8,title:"Rassismus in Institutionen",steps:[
+{y:"q",q:"Was ist institutioneller Rassismus?",a:[{t:"Wenn eine Institution offiziell rassistische Regeln hat.",ok:0},{t:"Wenn Vorgehensweisen und Entscheidungen einer Institution systematisch bestimmte Gruppen benachteiligen, auch ohne explizit rassistische Absicht.",ok:1},{t:"Wenn einzelne rassistische Mitarbeiter*innen in einer Institution arbeiten.",ok:0}],fp:"Richtig! Nicht die einzelnen Personen müssen rassistisch sein – das System produziert rassistische Ergebnisse.",fn:"Institutioneller Rassismus zeigt sich in Mustern und Ergebnissen, nicht nur in den Absichten einzelner Personen."},
+{y:"m",q:"Welche sind Beispiele für institutionellen Rassismus? (alle richtigen wählen)",a:[{t:"Schulen in bestimmten Stadtteilen haben schlechtere Ressourcen",ok:1},{t:"Bewerber*innen mit nicht-deutschen Namen werden seltener eingeladen",ok:1},{t:"Eine Lehrerin macht einen einzelnen rassistischen Witz",ok:0},{t:"Schwarze Menschen werden häufiger ohne Anlass polizeilich kontrolliert",ok:1}],fp:"Richtig! Institutioneller Rassismus zeigt sich in systematischen Mustern, nicht in Einzelfällen.",fn:"Der einzelne rassistische Witz ist kein institutioneller Rassismus. Muster und Systeme sind der Kern."},
+{y:"q",q:"Was ist Staatsrassismus?",a:[{t:"Wenn einzelne Politiker*innen rassistisch sprechen.",ok:0},{t:"Wenn geltende Gesetze bestimmte Gruppen systematisch diskriminieren oder von gesellschaftlicher Teilhabe ausschließen.",ok:1},{t:"Ein historisches Phänomen ohne heutige Entsprechung.",ok:0}],fp:"Genau! Die Nürnberger Rassegesetze 1935 oder Apartheid in Südafrika sind historische Beispiele. Moderne Beispiele gibt es weltweit.",fn:"Staatsrassismus bedeutet: Gesetze diskriminieren bestimmte Gruppen systematisch. Das ist ein historisches Phänomen mit modernen Entsprechungen."},
+{y:"q",q:"Was zeigte das Grundgesetz-Debatte um den Begriff 'Rasse'?",x:"Das Deutsche Institut für Menschenrechte fordert: 'Niemand darf rassistisch behandelt werden' statt 'wegen seiner Rasse'. (bpb)",a:[{t:"Dass es biologische Rassen gibt.",ok:0},{t:"Dass der Begriff 'Rasse' im Grundgesetz selbst ein Problem ist, weil er das Konzept implizit legitimiert.",ok:1},{t:"Dass Rassismus im Grundgesetz erlaubt ist.",ok:0}],fp:"Richtig! Das Institut für Menschenrechte erklärt: Der Begriff 'Rasse' soll aus dem GG verschwinden, weil das 'Rasse'-Konzept nicht akzeptiert werden soll.",fn:"Das GG schützt vor Diskriminierung, aber der Begriff 'Rasse' ist selbst problematisch."},
+{y:"r",q:"Mein Auftrag an mich:",pr:"Institutionen verändern sich, wenn Menschen innerhalb und außerhalb von ihnen Verantwortung übernehmen.\n\nWelche eine konkrete Initiative oder Veränderung möchtest du in deiner Schule anstoßen – im kleinen Rahmen, der für dich realistisch ist? Schreibe auf, wann und wie du den ersten Schritt machst.",ph:"Diesen ersten Schritt mache ich bis …: …"}
+]});
+
+M.push({t:1,n:9,title:"Rassismus & Antisemitismus",steps:[
+{y:"q",q:"Was ist der zentrale Unterschied zwischen Rassismus und Antisemitismus?",a:[{t:"Es gibt keinen Unterschied.",ok:0},{t:"Im Rassismus werden 'die Anderen' als minderwertig konstruiert; im Antisemitismus werden Jüdinnen*Juden oft als übermächtig und bedrohlich dargestellt.",ok:1},{t:"Antisemitismus ist weniger gefährlich als Rassismus.",ok:0}],fp:"Richtig! Die bpb erklärt: 'Anders als in rassistischen Denkmustern werden Juden meist als mächtig und überlegen angesehen, als heimliche Herrscher der Welt.'",fn:"Antisemitismus und Rassismus teilen Mechanismen, unterscheiden sich aber in der Art der Zuschreibung."},
+{y:"q",q:"Was ist 'Gruppenbezogene Menschenfeindlichkeit'?",a:[{t:"Ein Begriff für Rassismus gegen Ausländer*innen.",ok:0},{t:"Ein Konzept, das verschiedene Formen der Abwertung – Rassismus, Antisemitismus, Homophobie, Islamfeindlichkeit – als zusammenhängendes Phänomen beschreibt.",ok:1},{t:"Eine neue Form von Rassismus.",ok:0}],fp:"Genau! Der gemeinsame Kern all dieser Formen ist die Ideologie der Ungleichwertigkeit.",fn:"Gruppenbezogene Menschenfeindlichkeit fasst alle Formen der Abwertung von Gruppen zusammen – sie alle teilen die Logik der Ungleichwertigkeit."},
+{y:"m",q:"Was haben Rassismus und Antisemitismus gemeinsam? (alle richtigen wählen)",a:[{t:"Beide beruhen auf der Idee, dass bestimmte Gruppen grundsätzlich anders sind.",ok:1},{t:"Beide haben historische Verbindungen zu Macht und Ausbeutung.",ok:1},{t:"Beide sind gleich in ihrer Konstruktion.",ok:0},{t:"Beide wurden in Deutschland als Staatsdoktrinen eingesetzt.",ok:1}],fp:"Gut! Gemeinsamkeiten bei gleichzeitigen Unterschieden – das Verständnis beider hilft, das Gesamtphänomen zu bekämpfen.",fn:"Rassismus und Antisemitismus teilen Mechanismen, aber unterscheiden sich in der Art, wie das 'Andere' konstruiert wird."},
+{y:"q",q:"Warum ist es schwierig, über Rassismus in Deutschland zu sprechen?",x:"'In der Zeit nach 1945 war der Begriff Rassismus stark mit Schuld verbunden.' (bpb)",a:[{t:"Weil es kein echtes Problem mehr gibt.",ok:0},{t:"Weil der Rassismusvorwurf historisch mit dem NS verknüpft ist – was bei vielen Verleugnung als Reaktion auslöst.",ok:1},{t:"Weil der Begriff gesetzlich verboten ist.",ok:0}],fp:"Richtig! Die historische Last macht die Debatte schwierig – viele leugnen Rassismus, weil sie sich nicht mit dem NS gleichsetzen wollen.",fn:"Die historische Belastung des Begriffs führt oft zu Abwehr und Verleugnung statt zu Auseinandersetzung."},
+{y:"r",q:"Mein Auftrag an mich:",pr:"Rassismus und Antisemitismus bekämpfen heißt: beide ernst nehmen, beide benennen, für beide eintreten.\n\nSchreibe auf, wie du dich konkret informieren willst – ein Buch, eine Dokumentation, ein Gespräch. Lege einen Zeitpunkt fest, bis wann du diesen Schritt machst.",ph:"Um mehr zu verstehen, werde ich bis … Folgendes tun: …"}
+]});
+
+M.push({t:1,n:10,title:"Wiederholung & Vertiefung",steps:[
+{y:"q",q:"Welcher Satz fasst den Kern des Rassismus am besten zusammen?",a:[{t:"Rassismus ist die Überzeugung, dass Menschen biologisch ungleich sind.",ok:0},{t:"Rassismus ist ein Denk- und Herrschaftssystem, das Menschen hierarchisch einteilt und dabei Macht- und Ressourcenzugang verteilt.",ok:1},{t:"Rassismus ist, wenn man jemanden wegen seiner Hautfarbe beleidigt.",ok:0}],fp:"Richtig! Rassismus ist immer mehrdimensional: Ideologie, Handlung und Herrschaft zugleich.",fn:"Rassismus ist mehr als Beleidigung – er ist ein System, das Ungleichheit produziert und rechtfertigt."},
+{y:"m",q:"Welche Aussagen sind korrekt? (alle richtigen wählen)",a:[{t:"Rassismus kann ohne böse Absicht wirken.",ok:1},{t:"Struktureller Rassismus braucht keine rassistischen Einzelpersonen.",ok:1},{t:"Kulturrassismus ist weniger problematisch als biologischer Rassismus.",ok:0},{t:"Sprache trägt zu Rassismus bei, auch unbewusst.",ok:1}],fp:"Gut zusammengefasst! Diese vier Erkenntnisse sind Grundlage für ein modernes Rassismusverständnis.",fn:"Alle vier Punkte sind wichtig für das Verständnis von Rassismus in der Gegenwart."},
+{y:"q",q:"Was bedeutet es, wenn das Arbeitsheft sagt: 'Rassismus ist nicht angeboren, sondern erlernt'?",a:[{t:"Dass Rassismus harmlos ist, weil er erlernt wurde.",ok:0},{t:"Dass Rassismus überwunden werden kann – weil er erlernt wurde, kann er auch verlernt werden.",ok:1},{t:"Dass nur Unwissende rassistisch sind.",ok:0}],fp:"Sehr gut! Das ist die Botschaft des Arbeitshefts: Rassismus kann verlernt werden. Das ist die Grundlage aller antirassistischen Arbeit.",fn:"'Erlernt' bedeutet nicht 'harmlos' – sondern 'veränderbar'. Das ist der Kern antirassistischer Arbeit."},
+{y:"q",q:"Wofür steht die Abkürzung BIPoC?",a:[{t:"Black Indigenous People of Color – ein Begriff der Solidarität für Menschen, die von Rassismus betroffen sind.",ok:1},{t:"Ein wissenschaftlicher Fachbegriff ohne politische Bedeutung.",ok:0},{t:"Bundesinstitut für politische Chancengleichheit.",ok:0}],fp:"Richtig! BIPoC ist ein Begriff aus der antirassistischen Bewegung, der verschiedene betroffene Gruppen zusammenfasst.",fn:"BIPoC steht für Black, Indigenous, People of Color – ein Begriff der politischen Solidarität."},
+{y:"r",q:"Mein Auftrag an mich:",pr:"Du hast 10 Module zum Thema Erkennen abgeschlossen. Wissen ist der erste Schritt – aber erst Handeln verändert etwas.\n\nSchreibe dein wichtigstes persönliches Vorhaben aus diesem Themenblock auf. Konkret, realistisch, mit einem ersten Schritt, den du in den nächsten 7 Tagen machst.",ph:"Mein Vorhaben und erster Schritt in den nächsten 7 Tagen: …"}
+]});
+
+// ===== THEMA 2: REFLEKTIEREN (Module 1-10) =====
+M.push({t:2,n:1,title:"Privileg erkennen",steps:[
+{y:"q",q:"Was sind 'Privilegien' im Kontext von Rassismus?",a:[{t:"Besondere gesetzliche Rechte für bestimmte Gruppen.",ok:0},{t:"Unsichtbare Vorteile, die bestimmte Gruppen – oft weiße Menschen – genießen, ohne dass sie diese aktiv beanspruchen müssen.",ok:1},{t:"Reichtum und sozialer Status.",ok:0}],fp:"Richtig! Das Ally-Buch erklärt: 'Die Privilegien sind so stark in unserer Welt verankert, dass wir uns ihrer nicht mehr bewusst sind. Anders gesagt: wir sind für unsere Privilegien blind.'",fn:"Privilegien im Rassismuskontext sind oft unsichtbar und unbewusst – genau deshalb müssen sie reflektiert werden."},
+{y:"q",q:"Was ist das Problem an der Aussage 'Ich sehe keine Hautfarben, ich sehe nur Menschen'?",a:[{t:"Sie ist ein perfektes antirassistisches Statement.",ok:0},{t:"Sie verleugnet die gelebte Realität von Menschen, die täglich aufgrund ihrer Hautfarbe diskriminiert werden.",ok:1},{t:"Sie ist rassistisch, weil sie Menschen nicht differenziert.",ok:0}],fp:"Gut erkannt! Diese Aussage ignoriert, dass Hautfarbe in unserer Gesellschaft eine reale gesellschaftliche Bedeutung hat. Verleugnen hilft nicht.",fn:"Farbenblindheit ist gut gemeint, aber sie verleugnet die reale Erfahrung von Diskriminierung."},
+{y:"m",q:"Was beschreibt das Rad der Privilegien? (alle richtigen wählen)",a:[{t:"Verschiedene Dimensionen von Vor- und Nachteilen in der Gesellschaft",ok:1},{t:"Je näher am Zentrum, desto mehr Macht und Ressourcen",ok:1},{t:"Eine feste Rangordnung zwischen Nationen",ok:0},{t:"Faktoren wie Hautfarbe, Religion, Geschlecht, Klasse intersektionell",ok:1}],fp:"Genau! Das Rad zeigt: Privilegien sind mehrdimensional und überschneiden sich.",fn:"Das Rad der Privilegien zeigt, wie verschiedene Faktoren zusammenwirken und Macht beeinflussen."},
+{y:"q",q:"Warum reicht es nicht, 'nicht rassistisch' zu sein?",a:[{t:"Es reicht, wenn man selbst keine rassistischen Aussagen macht.",ok:0},{t:"'Nicht-rassistisch' sein lässt das System unverändert. Antirassismus bedeutet, aktiv dagegen zu handeln.",ok:1},{t:"'Nicht rassistisch' und 'antirassistisch' bedeuten dasselbe.",ok:0}],fp:"Richtig! Das Ally-Buch erklärt: 'Nicht-rassistisch zu sein bedeutet, die Welt so zu belassen, wie sie ist. Anti-rassistisch zu sein bedeutet, das Bewusstsein nach außen zu tragen.'",fn:"Passivität erhält das System. Antirassismus ist aktiv."},
+{y:"r",q:"Mein Auftrag an mich:",pr:"Privilegien zu haben bedeutet nicht, böse zu sein – aber sie zu ignorieren, erhält das System.\n\nWähle ein konkretes Privileg, das du hast. Schreibe auf, wie du es bewusst einsetzen kannst, um andere zu unterstützen oder Rassismus zu widersprechen.",ph:"Dieses Privileg habe ich – und so werde ich es einsetzen: …"}
+]});
+
+M.push({t:2,n:2,title:"Vorurteile & Gehirn",steps:[
+{y:"q",q:"Warum entwickelt das Gehirn Abkürzungen und Kategorien?",x:"'Die Welt ist so groß und so kompliziert, dass sie unmöglich in unsere Köpfe passen kann. Daher hat das Gehirn Abkürzungen entwickelt.' (Einleitung Arbeitsheft)",a:[{t:"Weil Menschen von Natur aus rassistisch sind.",ok:0},{t:"Weil das Gehirn Informationen vereinfacht, um handlungsfähig zu bleiben – das ist normal, aber fehleranfällig.",ok:1},{t:"Weil das Gehirn faul ist.",ok:0}],fp:"Genau! Das Gehirn vereinfacht – das ist nützlich, aber es macht uns anfällig für Vorurteile und unbewusste Stereotype.",fn:"Vereinfachungen sind biologisch sinnvoll, aber sie können zu Vorurteilen führen."},
+{y:"q",q:"Was passiert, wenn wir jemandem zum ersten Mal begegnen?",a:[{t:"Wir nehmen alle Informationen neutral auf.",ok:0},{t:"Wir aktivieren erlernte Programme, die uns auf bestimmte Weise reagieren lassen – ohne nachzudenken.",ok:1},{t:"Wir urteilen nur bewusst.",ok:0}],fp:"Richtig! Das Arbeitsheft: 'Es spielen sich erlernte Programme ab, die uns auf immer gleiche Weise reagieren lassen.' Das Problem: Diese Programme können rassistisch sein.",fn:"Wir reagieren auf Menschen oft automatisch – diese automatischen Programme können rassistisch geprägt sein."},
+{y:"m",q:"Was sind 'unbewusste Vorurteile' (unconscious bias)? (alle richtigen wählen)",a:[{t:"Vorurteile, die wir unbewusst aktivieren, ohne es zu wollen",ok:1},{t:"Nur bei explizit rassistischen Menschen vorhanden",ok:0},{t:"Können durch Bewusstsein und Training beeinflusst werden",ok:1},{t:"Beeinflussen, wen wir einstellen, befördern, ansprechen",ok:1}],fp:"Gut! Unbewusste Vorurteile wirken überall – erkennen ist der erste Schritt.",fn:"Unbewusste Vorurteile sind weit verbreitet und beeinflussen viele Entscheidungen täglich."},
+{y:"q",q:"Was ist der erste Schritt, um unbewusste Vorurteile zu bekämpfen?",a:[{t:"Sie verleugnen.",ok:0},{t:"Sich ihrer bewusst werden und aktiv hinterfragen, welche Programme in einem ablaufen.",ok:1},{t:"Sich möglichst wenig mit dem Thema beschäftigen.",ok:0}],fp:"Richtig! Das Arbeitsheft: 'Wir schlagen vor, klein anzufangen und Unsicherheiten abzubauen.' Selbstwahrnehmung ist der Anfang.",fn:"Unbewusste Vorurteile können nicht einfach 'ausgeschaltet' werden – aber Bewusstsein ist der erste Schritt."},
+{y:"r",q:"Mein Auftrag an mich:",pr:"Mein Autopilot läuft immer – aber ich kann ihn bewusst unterbrechen.\n\nSchreibe eine persönliche Regel: Was tust du, wenn du merkst, dass du automatisch und ungerecht über jemanden urteilst? Konkret, als würdest du dir selbst eine Anweisung geben.",ph:"Wenn mein Autopilot unfair urteilt, tue ich Folgendes: …"}
+]});
+
+M.push({t:2,n:3,title:"Innocent Racism",steps:[
+{y:"q",q:"Was ist 'innocent racism'?",a:[{t:"Rassismus, der entschuldbar ist, weil er unbeabsichtigt war.",ok:0},{t:"Rassismus, der verletzt, auch wenn die Person keine böse Absicht hatte und sich selbst für unschuldig hält.",ok:1},{t:"Rassismus in der Kindheit.",ok:0}],fp:"Richtig! Wie Victoria Robinson zeigt: Die Wirkung zählt, nicht die Absicht. Schmerz ist real, unabhängig davon ob jemand es 'böse meinte'.",fn:"'Unschuldig' heißt nicht 'harmlos'. Der Schaden entsteht unabhängig von der Absicht."},
+{y:"q",q:"Was meint Robinson, wenn sie schreibt: 'Und euer Rassismus ist so unschuldig'?",a:[{t:"Sie vergibt den rassistischen Personen.",ok:0},{t:"Sie beschreibt, wie Menschen ihren eigenen Rassismus nicht wahrnehmen, weil sie keine böse Absicht hatten.",ok:1},{t:"Sie sagt, dass innocent racism kein echtes Problem ist.",ok:0}],fp:"Genau! Robinson beschreibt die Blindheit gegenüber der eigenen Wirkung – 'ihr weder wollt, meint, noch tut'.",fn:"Robinson kritisiert das Nicht-Wahrnehmen der eigenen Wirkung, nicht die böse Absicht."},
+{y:"m",q:"Welche Aussagen können 'innocent racism' sein? (alle richtigen wählen)",a:[{t:"'Wo kommst du wirklich her?' nach der Antwort 'Frankfurt'",ok:1},{t:"'Du sprichst aber tolles Deutsch!'",ok:1},{t:"'Welche Musik magst du?'",ok:0},{t:"'Du bist für deine Verhältnisse sehr erfolgreich'",ok:1}],fp:"Richtig! Diese Aussagen klingen oft nach Kompliment oder Neugier – wirken aber verletzend und othering.",fn:"Neutral gemeinte Aussagen können durch ihren Subtext verletzend sein."},
+{y:"q",q:"Was ist die wichtigste Konsequenz aus dem Konzept 'innocent racism'?",a:[{t:"Man soll aufhören, mit Menschen anderer Herkunft zu sprechen.",ok:0},{t:"Man soll auf die Wirkung der eigenen Worte achten, nicht nur auf die Absicht.",ok:1},{t:"Man soll immer alles sagen dürfen.",ok:0}],fp:"Gut! Das Ally-Buch: 'Die einzige Regel, die es zu beherzigen gilt, ist, dass du immer auf die Wirkung achtest, die deine Worte bei anderen auslösen können.'",fn:"Die Wirkung ist wichtiger als die Absicht. Das ist die wichtigste Erkenntnis aus dem innocent racism-Konzept."},
+{y:"r",q:"Mein Auftrag an mich:",pr:"Die Wirkung meiner Worte liegt nicht nur in meiner Absicht, sondern in dem, was sie bei anderen auslösen.\n\nSchreibe eine Regel für dich: Wie willst du in Zukunft prüfen, ob etwas, das du sagen willst, verletzend wirken könnte – bevor du es sagst?",ph:"Bevor ich etwas sage, werde ich mich fragen: …"}
+]});
+
+M.push({t:2,n:4,title:"Ally sein – Was bedeutet das?",steps:[
+{y:"q",q:"Was ist ein Ally?",a:[{t:"Jemand, der selbst diskriminiert wird.",ok:0},{t:"Eine Person, die diskriminierte Gruppen aktiv unterstützt, obwohl sie selbst nicht betroffen ist – und dabei eigene Privilegien reflektiert.",ok:1},{t:"Jemand, der Rassismus gut findet.",ok:0}],fp:"Genau! Das Ally-Buch: 'Allies sind Personen, die marginalisierte Gruppen unterstützen, selbst wenn sie nicht betroffen sind.'",fn:"Ally sein bedeutet: Aktive Solidarität, auch wenn du selbst nicht betroffen bist."},
+{y:"q",q:"Warum kann man als Ally keine Dankbarkeit erwarten?",a:[{t:"Weil der eigene Einsatz nicht zählt.",ok:0},{t:"Weil man 'nur das Richtige tut' – Dankbarkeit zu erwarten wäre so, als erwarte man Dank dafür, jemanden nicht zu verletzen.",ok:1},{t:"Weil Betroffene undankbar sind.",ok:0}],fp:"Richtig! Das Ally-Buch: 'Wenn wir für unseren Einsatz Dankbarkeit erwarten würden, wäre es, als würden wir Dankbarkeit dafür erwarten, dass wir jemanden nicht angreifen.'",fn:"Ally sein ist Pflicht und Haltung – keine Leistung, für die man Anerkennung verdient."},
+{y:"m",q:"Was gehört zu aktivem Ally sein? (alle richtigen wählen)",a:[{t:"Eigene Privilegien erkennen und reflektieren",ok:1},{t:"Sich informieren und weiterbilden",ok:1},{t:"Auf Fehler hingewiesen werden und daraus lernen",ok:1},{t:"Von Betroffenen Lob und Bestätigung erwarten",ok:0}],fp:"Gut! Ally sein ist eine fortlaufende Praxis, keine einmalige Entscheidung.",fn:"Ally sein bedeutet: informieren, handeln, lernen – aber keine Dankbarkeit erwarten."},
+{y:"q",q:"Was sagt das Ally-Buch über Fehler und Entschuldigungen?",a:[{t:"Man muss sich nicht entschuldigen, wenn man keine böse Absicht hatte.",ok:0},{t:"Man muss sich entschuldigen – aber man kann nicht erwarten, dass man dafür vergeben wird. Das liegt allein bei den Betroffenen.",ok:1},{t:"Entschuldigungen sind wirkungslos.",ok:0}],fp:"Richtig! Entschuldigung ist Pflicht. Vergebung ist kein Anspruch – sondern eine Entscheidung der Betroffenen.",fn:"Entschuldigen ist notwendig. Vergebung ist aber das Recht der Betroffenen, nicht das Anrecht der Person, die Fehler gemacht hat."},
+{y:"r",q:"Mein Auftrag an mich:",pr:"Ally sein ist eine Entscheidung, die ich jeden Tag neu treffe.\n\nSchreibe dein persönliches Ally-Versprechen: konkret, für diese Woche, für diese Schule, für diesen Alltag. Was wirst du tun – nicht was andere tun sollen.",ph:"Als Ally werde ich diese Woche konkret Folgendes tun: …"}
+]});
+
+M.push({t:2,n:5,title:"Empathie & Perspektivwechsel",steps:[
+{y:"q",q:"Warum ist Empathie für antirassistische Arbeit wichtig?",a:[{t:"Weil sie Mitleid erzeugt.",ok:0},{t:"Weil sie uns helfen kann, Diskriminierungserfahrungen zu verstehen, die wir selbst nie machen – und damit unser Handeln zu motivieren.",ok:1},{t:"Weil sie ausreicht, um Rassismus zu bekämpfen.",ok:0}],fp:"Richtig! Das Ally-Buch: 'Stell dir vor, wie es sein muss, wenn du täglich damit konfrontiert bist, aufgrund deiner Hautfarbe diskriminiert zu werden.'",fn:"Empathie ist wichtig, aber sie reicht nicht aus. Sie muss in Handlung münden."},
+{y:"q",q:"Was zeigt das Platon-Höhlengleichnis im Kontext des Rassismus?",x:"'Wir sitzen in einer Höhle und schauen auf Schatten an der Wand. Wir halten diese Schatten für die Wirklichkeit.' (Ally-Buch)",a:[{t:"Dass die Realität immer subjektiv ist.",ok:0},{t:"Dass wir aus begrenzter Wahrnehmung heraustreten müssen, um Rassismus zu verstehen – auch wenn das zunächst schmerzhaft ist.",ok:1},{t:"Dass Menschen sich nie verändern können.",ok:0}],fp:"Genau! Aus der Höhle treten bedeutet: die bequeme Normalität verlassen, um die Realität von Diskriminierung zu sehen.",fn:"Das Höhlengleichnis zeigt: Wir können aus begrenzter Wahrnehmung heraustreten – aber es erfordert Mut."},
+{y:"m",q:"Was hilft beim Perspektivwechsel? (alle richtigen wählen)",a:[{t:"Bücher, Filme und Berichte von Betroffenen lesen und hören",ok:1},{t:"Annahmen über 'die Anderen' aktiv hinterfragen",ok:1},{t:"Sich nur mit Gleichgesinnten umgeben",ok:0},{t:"Eigene Reaktionen beobachten und reflektieren",ok:1}],fp:"Richtig! Perspektivwechsel ist eine aktive Praxis, keine einmalige Erleuchtung.",fn:"Perspektivwechsel braucht Aktivität: Lesen, Hören, Fragen, Reflektieren."},
+{y:"q",q:"Was meint das Ally-Buch mit 'im Vergleich zu dem Leid der Betroffenen ist unsere Anstrengung zu ertragen'?",a:[{t:"Dass Allies leiden müssen.",ok:0},{t:"Dass die Anstrengung des Ally-Seins im Verhältnis zum Leid der Betroffenen klein ist – und damit kein Grund zur Klage.",ok:1},{t:"Dass Betroffene nicht leiden.",ok:0}],fp:"Gut! Unbehagen beim Lernen über Rassismus ist nicht vergleichbar mit der täglichen Erfahrung von Diskriminierung.",fn:"Das Ally-Buch ruft zur Perspektivierung auf: unser Unbehagen ist klein im Vergleich zum Leid Betroffener."},
+{y:"r",q:"Mein Auftrag an mich:",pr:"Empathie wächst, wenn ich aktiv zuhöre und lerne – nicht nur, wenn ich urteile.\n\nWähle eine konkrete Weise, wie du in den nächsten zwei Wochen mehr über die Erfahrungen von Menschen lernst, die andere Lebensrealitäten haben als du. Ein Buch, ein Podcast, ein ehrliches Gespräch.",ph:"Um mehr zu verstehen, mache ich in den nächsten zwei Wochen: …"}
+]});
+
+M.push({t:2,n:6,title:"Sprache verlernen",steps:[
+{y:"q",q:"Was meint das Arbeitsheft mit 'Verlernbuch'?",a:[{t:"Ein Buch, das schlechte Lerntechniken kritisiert.",ok:0},{t:"Ein Buch, das dabei hilft, erlernte rassistische Denk- und Verhaltensweisen zu identifizieren und abzulegen.",ok:1},{t:"Ein Buch für Vergessliche.",ok:0}],fp:"Richtig! Das Arbeitsheft: 'Wir lernen den Rassismus zu verlernen, den es in unserer Gesellschaft gibt.'",fn:"'Verlernen' bedeutet: bewusst rassistische Muster erkennen und ablegen."},
+{y:"m",q:"Was soll man laut Arbeitsheft 'verlernen'? (alle richtigen wählen)",a:[{t:"Rassistische Bezeichnungen benutzen",ok:1},{t:"Kulturelle Aneignung bei Verkleidungen",ok:1},{t:"Kinderlieder mit rassistischen Inhalten singen",ok:1},{t:"Mehrkulturelle Perspektiven einnehmen",ok:0}],fp:"Genau! Kleine Verhaltensänderungen im Alltag – Sprache, Kostüme, Lieder – sind konkrete erste Schritte.",fn:"Verlernen fängt klein an: bei Sprache, Verkleidungen und alltäglichen Gewohnheiten."},
+{y:"q",q:"Was ist das Problem mit 'Das haben wir aber schon immer so gemacht'?",a:[{t:"Es ist eine gute Begründung für Traditionen.",ok:0},{t:"Es rechtfertigt rassistische Praktiken durch Gewohnheit, statt sie zu hinterfragen.",ok:1},{t:"Es zeigt Respekt vor der Geschichte.",ok:0}],fp:"Richtig! Das Arbeitsheft: 'Nicht alles, was man schon immer so gemacht hat, ist richtig, nur weil man es immer so gemacht hat.'",fn:"Tradition ist kein Freifahrtschein für diskriminierende Praktiken."},
+{y:"q",q:"Was ist 'kulturelle Aneignung'?",a:[{t:"Das Kennenlernen anderer Kulturen.",ok:0},{t:"Das Verwenden kultureller Elemente marginalisierter Gruppen auf eine Art, die diese Kulturen und Menschen abwertet oder ausbeutet.",ok:1},{t:"Austausch zwischen Kulturen allgemein.",ok:0}],fp:"Gut! Kulturelle Aneignung ist nicht dasselbe wie Interesse oder Austausch. Der Unterschied liegt in der Machtrelation und im Respekt.",fn:"Kulturelle Aneignung verletzt, wenn sie mächtigere Gruppen kulturelle Elemente marginalisierter Gruppen vereinnahmen."},
+{y:"r",q:"Mein Auftrag an mich:",pr:"Verlernen ist aktiv – es braucht Entscheidungen, nicht nur gute Absichten.\n\nNenne eine konkrete Verhaltensweise oder Gewohnheit, die du aktiv verlernen möchtest. Schreibe auf, wie du dich selbst daran erinnern wirst, und was du stattdessen tust.",ph:"Das verlerne ich bewusst – und ersetze es durch: …"}
+]});
+
+M.push({t:2,n:7,title:"Stereotype hinterfragen",steps:[
+{y:"q",q:"Was sind Stereotype?",a:[{t:"Individuelle Beurteilungen von Personen.",ok:0},{t:"Vereinfachte, verallgemeinerte Bilder von ganzen Gruppen, die individuelle Unterschiede ignorieren.",ok:1},{t:"Harmlose kulturelle Charakterisierungen.",ok:0}],fp:"Richtig! Stereotype sind Abkürzungen des Denkens – nützlich für das Gehirn, aber oft ungerecht für Individuen.",fn:"Stereotype reduzieren komplexe Menschen auf pauschale Gruppenbilder."},
+{y:"m",q:"Was macht eine Aussage zu einem rassistischen Stereotyp? (alle richtigen wählen)",a:[{t:"Sie schreibt einer ganzen Gruppe eine Eigenschaft zu, ohne Individuen zu betrachten.",ok:1},{t:"Sie stellt die Eigenschaft als biologisch oder kulturell 'natürlich' dar.",ok:1},{t:"Sie beschreibt eine Person mit ihrem Namen und Wohnort.",ok:0},{t:"Sie tut das auch dann, wenn die Aussage 'gut gemeint' oder vermeintlich positiv ist.",ok:1}],fp:"Richtig! Stereotype sind problematisch, sobald sie Gruppen pauschal und unveränderlich charakterisieren – egal ob positiv oder negativ gemeint.",fn:"Eine Aussage wird zum Stereotyp, wenn sie Individuen auf Gruppenmerkmale reduziert und diese als naturgegeben darstellt."},
+{y:"q",q:"Warum sind 'positive' Stereotype problematisch?",a:[{t:"Sie sind nicht problematisch, weil sie Menschen aufwerten.",ok:0},{t:"Sie reduzieren individuelle Leistungen auf Gruppenzugehörigkeit und reproduzieren Kategorisierungen.",ok:1},{t:"Sie sind nur für Betroffene problematisch.",ok:0}],fp:"Genau! Wie das Ally-Buch erklärt: 'Positiver Rassismus ist ein Rassismus, der nicht aktiv rassistisch gemeint ist – aber immer noch Rassismus.'",fn:"'Positive' Stereotype wirken gut gemeint, aber sie kategorisieren und reduzieren genauso wie negative."},
+{y:"q",q:"Wie kann man eigene Stereotype aktiv hinterfragen?",a:[{t:"Indem man keine Generalaussagen über Gruppen mehr macht.",ok:0},{t:"Indem man bei Aussagen über Gruppen fragt: 'Kenne ich das wirklich – oder ist das ein erlerntes Muster?'",ok:1},{t:"Indem man alle Unterschiede ignoriert.",ok:0}],fp:"Richtig! Aktives Hinterfragen beginnt mit dem Bewusstsein, dass automatische Urteile nicht zuverlässig sind.",fn:"Stereotype hinterfragen bedeutet: innezuhalten und die Herkunft eigener Urteile zu prüfen."},
+{y:"r",q:"Mein Auftrag an mich:",pr:"Stereotype entstehen unbewusst – ich kann sie bewusst in Frage stellen, wenn ich sie bei mir bemerke.\n\nSchreibe eine persönliche Strategie: Was fragst du dich, wenn du merkst, dass du gerade pauschalisierst? Formuliere zwei bis drei innere Fragen, die dich bremsen und zum Nachdenken bringen.",ph:"Wenn ich pauschalisiere, stelle ich mir diese Fragen: …"}
+]});
+
+M.push({t:2,n:8,title:"Rassismus in Medien",steps:[
+{y:"q",q:"Wie trägt Berichterstattung zu Rassismus bei?",a:[{t:"Nur durch explizit rassistische Beiträge.",ok:0},{t:"Auch durch Sündenbockmechanismen, negative Rahmungen von Gruppen oder die Überrepräsentation bestimmter Narrative.",ok:1},{t:"Medien haben keinen Einfluss auf Rassismus.",ok:0}],fp:"Richtig! jugendschutz.net dokumentiert: 'Auf vielen Seiten werden nach bekannten Sündenbockmechanismen Ausländer, Muslime, Juden für gesellschaftliche Missstände verantwortlich gemacht.'",fn:"Medien beeinflussen stark, wie wir über Gruppen denken – auch ohne expliziten Rassismus."},
+{y:"q",q:"Was ist das Problem an der Aussage 'Ich habe in den Nachrichten gehört, dass Flüchtlinge nur wegen Geld kommen'?",a:[{t:"Es ist eine faktenbasierte Aussage.",ok:0},{t:"Nachrichten können Vorurteile gegenüber Geflüchteten schüren – man sollte immer mehrere Quellen prüfen und die Lage der Betroffenen verstehen.",ok:1},{t:"Man darf solche Aussagen nicht diskutieren.",ok:0}],fp:"Gut! Das Ally-Buch empfiehlt: 'Nicht auf eine Nachrichtenquelle verlassen, sondern sich durch mehrere informieren.'",fn:"Nachrichten können Vorurteile fördern. Kritisches Hinterfragen und mehrere Quellen sind wichtig."},
+{y:"m",q:"Was sind Merkmale rassistischer Onlineinhalte? (alle richtigen wählen)",a:[{t:"Sie machen Minderheiten für gesellschaftliche Probleme verantwortlich",ok:1},{t:"Sie nutzen Hassbotschaften, die Gewalt gegen Gruppen aufstacheln",ok:1},{t:"Sie berichten über Diskriminierungsfälle",ok:0},{t:"Sie verbreiten sich in sozialen Medien durch algorithmische Verstärkung",ok:1}],fp:"Richtig! Online-Rassismus nutzt Sündenbockmechanismen und algorithmische Verstärkung.",fn:"Rassistische Online-Inhalte erkennt man an Sündenbockmechanismen und Gewaltaufrufen."},
+{y:"q",q:"Was kann ich tun, wenn ich rassistische Inhalte online sehe?",a:[{t:"Ignorieren und weiterscrollen.",ok:0},{t:"Melden, kontern mit Fakten, Betroffene unterstützen und Plattformen zur Rechenschaft ziehen.",ok:1},{t:"Den Inhalt teilen, um ihn bekannt zu machen.",ok:0}],fp:"Richtig! Keine Reaktion ist auch eine Entscheidung. Melden und kontern sind wirksame Schritte.",fn:"Ignorieren vergrößert das Problem. Melden, Widersprechen und Betroffene stärken sind wirksam."},
+{y:"r",q:"Mein Auftrag an mich:",pr:"Medienkompetenz ist eine Fähigkeit, die ich täglich üben kann.\n\nSchreibe einen konkreten Vorsatz: Wie willst du in Zukunft mit Nachrichten über gesellschaftliche Gruppen umgehen? Was prüfst du, bevor du etwas teilst oder glaubst?",ph:"Bevor ich Nachrichten über Gruppen teile oder glaube, prüfe ich: …"}
+]});
+
+M.push({t:2,n:9,title:"Identität & Zugehörigkeit",steps:[
+{y:"q",q:"Was zeigt Amartya Sens Zitat über Identität?",x:"'Menschen werden nach vielen Kategorien in Gruppen unterteilt, die sich überschneiden und in verschiedene Richtungen weisen.' (bpb)",a:[{t:"Dass Menschen nur einer Gruppe angehören.",ok:0},{t:"Dass jeder Mensch vielfältige, sich überschneidende Identitäten hat – und Rassismus diese Komplexität ignoriert.",ok:1},{t:"Dass Gruppenidentitäten unwichtig sind.",ok:0}],fp:"Richtig! Rassismus reduziert komplexe Menschen auf eine einzige Kategorie – dabei hat jeder Mensch viele verschiedene Zugehörigkeiten.",fn:"Identität ist vielfältig. Rassismus vereinfacht diese Komplexität auf ein einziges Merkmal."},
+{y:"q",q:"Was bedeutet Intersektionalität?",a:[{t:"Das Zusammenwirken mehrerer Diskriminierungsformen, die sich gegenseitig beeinflussen.",ok:1},{t:"Ein Begriff für internationale Zusammenarbeit.",ok:0},{t:"Die Verbindung von Nationalität und Ethnizität.",ok:0}],fp:"Genau! Eine schwarze Frau erlebt zum Beispiel sowohl Rassismus als auch Sexismus – und deren Überschneidung ist mehr als die Summe beider.",fn:"Intersektionalität beschreibt, wie verschiedene Diskriminierungsformen zusammenwirken."},
+{y:"m",q:"Welche Zugehörigkeiten hat jeder Mensch? (alle richtigen wählen)",a:[{t:"Nationalität",ok:1},{t:"Familienangehörigkeit",ok:1},{t:"Sprachgemeinschaft",ok:1},{t:"Eine eindeutige, unveränderliche 'Rasse'",ok:0}],fp:"Richtig! Nationalität, Familie, Sprache sind reale Zugehörigkeiten. 'Rasse' ist ein Konstrukt ohne biologische Basis.",fn:"Menschen haben viele echte Zugehörigkeiten – 'Rasse' ist keine darunter, da biologisch nicht existent."},
+{y:"q",q:"Warum ist es problematisch, jemanden auf eine einzige Identitätskategorie zu reduzieren?",a:[{t:"Weil Identitäten unwichtig sind.",ok:0},{t:"Weil dadurch die Vielfalt des Menschen ignoriert wird – und die Reduktion oft als Instrument der Abwertung dient.",ok:1},{t:"Weil Kategorien immer falsch sind.",ok:0}],fp:"Gut! Menschen sind mehr als eine Eigenschaft. Reduktion auf eine Kategorie ist Grundlage von Diskriminierung.",fn:"Reduktion auf eine Kategorie ignoriert Komplexität und dient oft der Abwertung."},
+{y:"r",q:"Mein Auftrag an mich:",pr:"Ich bin mehr als eine einzige Eigenschaft – und das gilt für jeden Menschen.\n\nSchreibe auf, wie du in Zukunft bewusst sicherstellen wirst, dass du andere Menschen nicht auf eine Eigenschaft reduzierst. Was ist deine persönliche Regel im Umgang mit Menschen, die du noch nicht kennst?",ph:"Im Umgang mit neuen Menschen nehme ich mir vor: …"}
+]});
+
+M.push({t:2,n:10,title:"Antirassismus im Alltag",steps:[
+{y:"q",q:"Was bedeutet antirassistisch zu sein im Alltag?",a:[{t:"Einmal im Jahr an einem Projekttag teilnehmen.",ok:0},{t:"Eine fortlaufende Praxis: lernen, reflektieren, handeln und bereit sein, Fehler zu machen und daraus zu lernen.",ok:1},{t:"Alle Regeln des 'korrekten' Verhaltens kennen.",ok:0}],fp:"Richtig! Das Ally-Buch: 'Man muss lesen, zuhören, sich informieren, hinterfragen, Impulse kontrollieren, mutig sein.'",fn:"Antirassismus ist keine Checkliste, sondern eine Haltung und tägliche Praxis."},
+{y:"m",q:"Was sind konkrete antirassistische Handlungen im Alltag? (alle richtigen wählen)",a:[{t:"Rassistische Kommentare klar benennen",ok:1},{t:"Betroffene Personen direkt fragen, wie man helfen kann",ok:1},{t:"Immer die perfekte Antwort parat haben",ok:0},{t:"Sich aktiv weiterbilden",ok:1}],fp:"Genau! Antirassismus ist nicht perfekt – es geht ums Handeln, auch wenn man unsicher ist.",fn:"Perfektionismus ist kein Grund für Passivität. Handeln, auch unsicher, ist besser als Schweigen."},
+{y:"q",q:"Was sagt das Ally-Buch über Schweigen?",x:"'Am Ende werden wir uns nicht an die Worte unserer Feinde erinnern, sondern an das Schweigen unserer Freunde.' (Martin Luther King Jr.)",a:[{t:"Schweigen ist manchmal die klügste Reaktion.",ok:0},{t:"Schweigen ist auch eine Aussage – es signalisiert Akzeptanz des Status quo.",ok:1},{t:"Schweigen schützt vor Konflikten.",ok:0}],fp:"Richtig! Schweigen ist nicht neutral. Es bedeutet: ich lasse das zu.",fn:"Schweigen schützt nicht – es akzeptiert. Das gilt für rassistische Witze wie für Diskriminierung."},
+{y:"q",q:"Was ist der Unterschied zwischen 'Fehler machen' und 'aufgeben'?",a:[{t:"Es gibt keinen Unterschied.",ok:0},{t:"Fehler machen gehört zum Lernen – wer aufgibt, hört auf zu lernen. Banksy: 'Wenn du müde bist, lerne eine Pause einzulegen statt aufzugeben.'",ok:1},{t:"Aufgeben ist manchmal die richtige Entscheidung.",ok:0}],fp:"Gut! Fehler sind Teil des Lernprozesses. Das Ally-Buch betont: aus Fehlern lernen und weitermachen.",fn:"Fehler sind unvermeidlich. Aufhören ist die falsche Reaktion. Weitermachen nach Pausen ist das Ziel."},
+{y:"r",q:"Mein Auftrag an mich:",pr:"Antirassismus ist keine einmalige Entscheidung, sondern eine tägliche Haltung.\n\nSchreibe deinen persönlichen Wochenplan für antirassistisches Handeln: Was machst du am Montag, was am Donnerstag, was am Wochenende? Klein, konkret, machbar.",ph:"Mein Antirassismus-Wochenplan: Montag … Donnerstag … Wochenende …"}
+]});
+
+// ===== THEMA 3: HANDELN (Module 1-10) =====
+M.push({t:3,n:1,title:"Zivilcourage – Grundlagen",steps:[
+{y:"q",q:"Was ist Zivilcourage im Kontext von Rassismus?",a:[{t:"Die Bereitschaft, bei körperlicher Gewalt einzugreifen.",ok:0},{t:"Die aktive Bereitschaft, rassistischen Äußerungen und Handlungen entgegenzutreten – auch wenn es unbequem ist.",ok:1},{t:"Ein Heldenmut, den nur wenige besitzen.",ok:0}],fp:"Richtig! Zivilcourage beginnt mit kleinen Schritten: ein Kommentar, eine Frage, das Sich-auf-die-Seite-Stellen.",fn:"Zivilcourage ist keine Heldentat, sondern eine alltägliche Haltung."},
+{y:"q",q:"Was sagt die bpb über rassistische Äußerungen in der Schule?",a:[{t:"Sie sollen toleriert werden, um Dialog zu ermöglichen.",ok:0},{t:"Sie dürfen nicht unwidersprochen bleiben – Rassismus ist durch keine Ideologie zu rechtfertigen.",ok:1},{t:"Sie sollen ignoriert werden, um keine Eskalation zu riskieren.",ok:0}],fp:"Genau! Die bpb: 'Rassistische Äußerungen in der Schule oder der Klasse dürfen nicht unwidersprochen bleiben.'",fn:"Schweigen bei rassistischen Äußerungen signalisiert Akzeptanz. Widersprechen ist Pflicht."},
+{y:"m",q:"Was sind Grundprinzipien von Zivilcourage? (alle richtigen wählen)",a:[{t:"Nicht schweigen",ok:1},{t:"Betroffene Menschen unterstützen",ok:1},{t:"Immer allein handeln",ok:0},{t:"Verbündete suchen und Hilfe holen",ok:1}],fp:"Richtig! Das Ally-Buch betont: 'Ally sein ist ein Team-Sport, keine Einzeldisziplin.'",fn:"Zivilcourage ist kein Solo-Sport. Verbündete suchen und Hilfe holen ist klug, nicht feige."},
+{y:"q",q:"Was ist besser: sofort reagieren oder verzögert Stellung beziehen?",a:[{t:"Nur sofortige Reaktion zählt.",ok:0},{t:"Beides ist möglich und wertvoll – wichtig ist, dass man überhaupt reagiert und nicht schweigt.",ok:1},{t:"Verzögerte Reaktionen sind immer wirkungslos.",ok:0}],fp:"Gut! Das Ally-Buch: 'Es ist auch in Ordnung, wenn du nicht sofort sprichst. Du kannst auch hinterher Stellung beziehen. Aber auf keinen Fall schweigen.'",fn:"Wichtig ist das Handeln an sich – nicht das perfekte Timing."},
+{y:"r",q:"Mein Auftrag an mich:",pr:"Zivilcourage beginnt mit einer inneren Haltung – und dann mit einem einzigen Satz.\n\nSchreibe einen Satz auf, den du ab heute sagen kannst, wenn du Zeug*in von Rassismus wirst. Übe ihn so, dass er sich selbstverständlich anfühlt.",ph:"Mein Satz für solche Momente lautet: …"}
+]});
+
+M.push({t:3,n:2,title:"Handlungsoptionen in konkreten Situationen",steps:[
+{y:"q",q:"In der Pause macht ein Mitschüler einen rassistischen Witz. Was ist die wirksamste Reaktion?",a:[{t:"Nichts sagen – ich will keinen Streit.",ok:0},{t:"Ruhig und klar sagen: 'Den Witz finde ich nicht okay, das verletzt Menschen.' – dann Thema wechseln.",ok:1},{t:"Mitlachen und später unter vier Augen reden.",ok:0}],fp:"Sehr gut! Ein ruhiger Satz im Moment zählt. Schweigen oder Mitmachen signalisiert Zustimmung.",fn:"Schweigen signalisiert Zustimmung. Ein ruhiger, kurzer Satz wirkt mehr als langes Schweigen."},
+{y:"q",q:"Du siehst ein rassistisches Graffiti an der Schule. Was machst du?",a:[{t:"Es ignorieren, jemand anderes soll sich darum kümmern.",ok:0},{t:"Eine Lehrkraft informieren, und wenn möglich das Wort selbst entfernen oder Freunde um Hilfe bitten.",ok:1},{t:"Es fotografieren und online posten.",ok:0}],fp:"Richtig! Das Ally-Buch: 'Ich informiere eine Lehrkraft. Ich lösche, wenn mir das möglich ist, das Wort selbst.'",fn:"Graffiti zu ignorieren bedeutet, dass es bleibt. Handeln heißt: informieren und wenn möglich entfernen."},
+{y:"m",q:"Was kannst du tun, wenn eine Mitschülerin in einer Gruppe beschimpft wird? (alle richtigen wählen)",a:[{t:"Zur betroffenen Person gehen und fragen, ob sie okay ist",ok:1},{t:"Gemeinsam mit ihr den Ort verlassen",ok:1},{t:"Allein lautstark in die Gruppe eingreifen",ok:0},{t:"Danach eine Vertrauensperson oder Lehrkraft informieren",ok:1}],fp:"Gut! Betroffene stärken und danach Hilfe holen ist sicherer als direkte Konfrontation.",fn:"Direkte Konfrontation kann eskalieren. Betroffene stärken und Hilfe holen ist wirksamer."},
+{y:"q",q:"Was sollte man tun, wenn eine Lehrkraft ein rassistisches Wort aus einem Text ausspricht?",a:[{t:"Nichts tun, weil Lehrkräfte Autorität haben.",ok:0},{t:"Nach dem Unterricht eine vertrauenswürdige Lehrkraft ansprechen, die SV oder Eltern um Hilfe bitten.",ok:1},{t:"Sofort laut protestieren, auch wenn es Konsequenzen hat.",ok:0}],fp:"Richtig! Das Ally-Buch: 'Ich suche nach dem Unterricht andere Lehrkräfte auf, denen ich vertraue, und bitte sie um Hilfe.'",fn:"Auch Lehrkräfte können falsch liegen. Es gibt Wege, dieses anzusprechen ohne selbst gefährdet zu sein."},
+{y:"r",q:"Mein Auftrag an mich:",pr:"Vorbereitung macht mutiger. Wer im Voraus überlegt hat, wie er handelt, handelt auch.\n\nSchreibe deinen persönlichen 3-Schritte-Plan für den Fall, dass du morgen in der Schule Zeug*in von Rassismus wirst. Schritt 1: sofort. Schritt 2: danach. Schritt 3: langfristig.",ph:"Mein 3-Schritte-Plan: 1) … 2) … 3) …"}
+]});
+
+M.push({t:3,n:3,title:"Racial Profiling & Behörden",steps:[
+{y:"q",q:"Was sollte man wissen, wenn man von Racial Profiling betroffen ist?",a:[{t:"Man kann dagegen nichts tun.",ok:0},{t:"Man kann sich vorab über Rechte informieren und wenn möglich den Fall dokumentieren und melden.",ok:1},{t:"Man sollte die Polizei nie kritisieren.",ok:0}],fp:"Richtig! Das Ally-Buch: 'Als Betroffene*r informiere ich mich im Voraus über meine Rechte und Meldestellen.'",fn:"Vorbereitung ist wichtig: Rechte kennen, dokumentieren, melden."},
+{y:"q",q:"Was kann ein*e Zeug*in bei Racial Profiling tun?",a:[{t:"Nichts – das ist Sache der Betroffenen.",ok:0},{t:"Hilfsbereitschaft signalisieren, Informationen sammeln (z.B. Kennzeichen), sich als Zeug*in anbieten.",ok:1},{t:"Laut protestieren und die Polizei anschreien.",ok:0}],fp:"Genau! Das Ally-Buch: 'Als Zeug*in: Hilfsbereitschaft signalisieren, ohne sich aufzudrängen. Informationen sammeln. Als Zeug*in anbieten.'",fn:"Zeug*in sein ist wertvoll: präsent sein, dokumentieren, sich anbieten – ohne zu eskalieren."},
+{y:"m",q:"Was sind Antidiskriminierungsstellen und wozu dienen sie? (alle richtigen wählen)",a:[{t:"Sie bieten Beratung für Betroffene von Diskriminierung",ok:1},{t:"Sie können Fälle dokumentieren und bei rechtlichen Schritten helfen",ok:1},{t:"Sie ersetzen die Polizei",ok:0},{t:"Sie sind Anlaufstellen für Beschwerden über Institutionen",ok:1}],fp:"Richtig! Antidiskriminierungsstellen wie die ADS des Bundes sind wichtige Ressourcen für Betroffene.",fn:"Antidiskriminierungsstellen beraten, dokumentieren und helfen – aber sie ersetzen keine Sicherheitsbehörden."},
+{y:"q",q:"Was rät das Ally-Buch bei Diskriminierung bei der Wohnungssuche?",a:[{t:"Einfach weitersuchen und nicht darüber reden.",ok:0},{t:"Zeug*innen mitnehmen und den Fall an die Antidiskriminierungsstelle des Bundes melden.",ok:1},{t:"Den Vermieter direkt konfrontieren.",ok:0}],fp:"Gut! Dokumentation und Meldung machen Diskriminierung sichtbar und können systemische Veränderung anstoßen.",fn:"Einzelfälle melden macht Muster sichtbar und ist die Grundlage für strukturelle Veränderung."},
+{y:"r",q:"Mein Auftrag an mich:",pr:"Informiert zu sein bedeutet, handlungsfähig zu sein.\n\nSchreibe auf: Welche eine Anlaufstelle oder welches Recht willst du dir in den nächsten Tagen konkret merken – damit du bereit bist, zu helfen, wenn jemand aus deinem Umfeld Diskriminierung erlebt?",ph:"Diese Anlaufstelle oder dieses Recht merke ich mir: …"}
+]});
+
+M.push({t:3,n:4,title:"Als Ally handeln – Fallbeispiele",steps:[
+{y:"q",q:"Ein Kind muslimischen Glaubens wird von der Klasse zu seiner 'Heimat' befragt. Was ist das Problem?",a:[{t:"Es ist in Ordnung, nach der Religion zu fragen.",ok:0},{t:"Es ist nicht in Ordnung, aufgrund der Religionszugehörigkeit auf ein anderes Herkunftsland zu schließen.",ok:1},{t:"Das Kind soll die Frage beantworten.",ok:0}],fp:"Richtig! Das Ally-Buch erklärt dieses Fallbeispiel: Aus Religion auf Herkunft zu schließen ist eine Form von Othering.",fn:"Religion sagt nichts über Herkunftsland aus. Diesen Zusammenhang herzustellen ist eine Form von Rassismus."},
+{y:"q",q:"Jemand benutzt ein rassistisches Wort und beruft sich auf einen angeblichen 'Pass' von einer betroffenen Person. Wie reagierst du?",a:[{t:"Nichts sagen, die Person hat Erlaubnis.",ok:0},{t:"Erklären, dass eine einzelne Person nicht für eine ganze Gruppe sprechen kann und das Wort verletzend ist.",ok:1},{t:"Die betroffene Person um Klarstellung bitten.",ok:0}],fp:"Gut! Das Ally-Buch: 'Ich weise darauf hin, dass eine Schwarze Person nicht für die ganze Schwarze Bevölkerung entscheiden kann.'",fn:"Kein Einzelmensch kann eine Erlaubnis für eine ganze Gruppe geben. Das Wort bleibt verletzend."},
+{y:"m",q:"Wie kann ich auf rassistische Vorurteile in einem Gespräch reagieren? (alle richtigen wählen)",a:[{t:"Fakten präsentieren, die das Vorurteil widerlegen",ok:1},{t:"Rückfragen stellen, die zur Reflexion einladen",ok:1},{t:"Sofort die Beziehung zur Person beenden",ok:0},{t:"Die Aussage als Problem benennen ohne die Person anzugreifen",ok:1}],fp:"Richtig! Das Ally-Buch empfiehlt: ruhig bleiben, Transparenz schaffen, Fragen stellen.",fn:"Ruhiges Widersprechen mit Fakten und Fragen ist wirksamer als Angriff oder Rückzug."},
+{y:"q",q:"Was meint das Ally-Buch mit 'Ally sein ist ein Team-Sport'?",a:[{t:"Dass man nur in Gruppen handeln kann.",ok:0},{t:"Dass antirassistisches Handeln Verbündete braucht – niemand kann allein die Welt verändern.",ok:1},{t:"Dass Sport ein gutes Mittel gegen Rassismus ist.",ok:0}],fp:"Genau! Verbündete suchen, Netzwerke aufbauen und Verantwortung teilen – das ist nachhaltiger als Einzelkämpfer*innentum.",fn:"Antirassismus braucht Gemeinschaft. Alone you go faster, together you go further."},
+{y:"r",q:"Mein Auftrag an mich:",pr:"Ally sein heißt: im richtigen Moment da sein, ruhig bleiben und klar sprechen.\n\nSchreibe auf, welche eine Situation in deinem Schulalltag du als Ally aktiv gestalten möchtest. Was ist deine Rolle – und was sagst oder tust du konkret?",ph:"In dieser Situation will ich als Ally handeln: … Meine konkrete Aktion: …"}
+]});
+
+M.push({t:3,n:5,title:"Schule ohne Rassismus",steps:[
+{y:"q",q:"Was ist das Ziel der Initiative 'Schule ohne Rassismus – Schule mit Courage'?",a:[{t:"Einen rassismusfreien Projekttag pro Jahr zu organisieren.",ok:0},{t:"Langfristige, strukturelle Veränderung der Schulkultur durch nachhaltige Projekte, klare Regeln und eine offene Gesprächskultur.",ok:1},{t:"Rassismus aus dem Lehrplan zu streichen.",ok:0}],fp:"Richtig! Aus der Selbstverpflichtung: 'Ich werde mich dafür einsetzen, dass es zu einer zentralen Aufgabe meiner Schule wird, nachhaltige und langfristige Projekte zu entwickeln.'",fn:"Ein Projekttag reicht nicht. Es braucht dauerhafte strukturelle Veränderung."},
+{y:"q",q:"Was wird in der Selbstverpflichtung von 'Schule ohne Rassismus' versprochen?",a:[{t:"Keinen Kontakt zu Menschen anderer Herkunft zu haben.",ok:0},{t:"Sich aktiv gegen Diskriminierung zu wenden und mindestens einmal pro Jahr ein Projekt zum Thema durchzuführen.",ok:1},{t:"Die Schule zu einem 'sicheren Raum' ohne kritische Diskussionen zu machen.",ok:0}],fp:"Genau! Die Selbstverpflichtung: 'Wenn an meiner Schule Gewalt oder diskriminierende Handlungen ausgeübt werden, wende ich mich dagegen.'",fn:"Die Selbstverpflichtung ist klar: aktiv gegen Diskriminierung vorgehen und mindestens ein Jahresprojekt."},
+{y:"m",q:"Was kann eine Schüler*innenvertretung (SV) tun, um eine Schule ohne Rassismus zu unterstützen? (alle richtigen wählen)",a:[{t:"Projekte und Workshops zum Thema initiieren",ok:1},{t:"Betroffene Schüler*innen unterstützen und Gehör verschaffen",ok:1},{t:"Rassismus innerhalb der SV ignorieren",ok:0},{t:"Anti-Diskriminierungsregeln mitgestalten",ok:1}],fp:"Richtig! SVen haben reale Gestaltungsmacht in der Schulkultur.",fn:"SVen sind wichtige Akteur*innen für eine antirassistische Schulkultur."},
+{y:"q",q:"Was ist wichtig im Umgang mit dem Thema Rassismus im Unterricht?",a:[{t:"Es nur in speziellen Fächern zu behandeln.",ok:0},{t:"Die Würde aller Schüler*innen ins Zentrum zu stellen und klare Position zu beziehen – Rassismus ist nicht durch Ideologie zu rechtfertigen.",ok:1},{t:"Immer neutral zu bleiben und keine Position zu beziehen.",ok:0}],fp:"Richtig! Die bpb betont: Eine klare Position einnehmen ist notwendig. Neutralität bei Menschenrechtsverletzungen gibt es nicht.",fn:"Bei Rassismus kann es keine Neutralität geben. Klare Positionierung ist pädagogische Pflicht."},
+{y:"r",q:"Mein Auftrag an mich:",pr:"Schulkultur verändert sich, wenn einzelne Menschen anfangen, anders zu handeln.\n\nSchreibe eine konkrete Idee für ein antirassistisches Projekt oder eine Initiative, die du in deiner Schule anregen könntest. Was ist der erste Schritt – und wann machst du ihn?",ph:"Meine Idee für die Schule: … Erster Schritt bis: …"}
+]});
+
+M.push({t:3,n:6,title:"Mit Betroffenen kommunizieren",steps:[
+{y:"q",q:"Was ist das Wichtigste im Umgang mit Betroffenen von Rassismus?",a:[{t:"Ihnen erklären, dass sie zu empfindlich sind.",ok:0},{t:"Ihre Erfahrungen ernst nehmen, glauben und fragen, wie man helfen kann – statt anzunehmen.",ok:1},{t:"Ihnen Ratschläge geben, wie sie besser mit Rassismus umgehen können.",ok:0}],fp:"Richtig! Das Arbeitsheft: 'Wir müssen zuhören, hinsehen und Betroffenen Glauben schenken und sie ernst nehmen.'",fn:"Betroffene ernst nehmen, glauben, fragen – das ist die Grundlage solidarischer Kommunikation."},
+{y:"q",q:"Was sollte man NICHT tun, wenn jemand rassistische Diskriminierung berichtet?",a:[{t:"Zuhören und nachfragen, wie man helfen kann.",ok:0},{t:"Sagen 'Das glaube ich dir nicht' oder 'Das war sicher nicht so gemeint'.",ok:1},{t:"Die Person fragen, ob sie Unterstützung möchte.",ok:0}],fp:"Genau! Zweifel an Diskriminierungserfahrungen sind verletzend und reproduzieren das Problem.",fn:"Diskriminierungserfahrungen anzuzweifeln ist selbst eine Form von Verletzung."},
+{y:"m",q:"Wie kann man Betroffene von rassistischer Gewalt unterstützen? (alle richtigen wählen)",a:[{t:"Emotionale Unterstützung zeigen, ohne sich aufzudrängen",ok:1},{t:"Sich als Zeug*in anbieten und Informationen sammeln",ok:1},{t:"Ihnen sagen, was sie hätten anders machen sollen",ok:0},{t:"Informationen über Beratungsstellen teilen",ok:1}],fp:"Richtig! Unterstützung heißt: präsent sein, fragen, informieren – nicht bevormunden.",fn:"Unterstützung ohne Bevormundung: präsent sein, fragen was gewünscht ist, Informationen anbieten."},
+{y:"q",q:"Warum ist es wichtig, bei Diskriminierung zu dokumentieren?",a:[{t:"Um in sozialen Medien darüber zu berichten.",ok:0},{t:"Weil Dokumentation Beweise schafft und später für rechtliche Schritte oder Meldungen genutzt werden kann.",ok:1},{t:"Um die diskriminierende Person zu konfrontieren.",ok:0}],fp:"Richtig! Das Ally-Buch: 'Dokumentiere alles und halte es fest – biete diese Informationen an, falls nötig.'",fn:"Dokumentation schafft Beweise und macht Diskriminierung sichtbar für spätere Schritte."},
+{y:"r",q:"Mein Auftrag an mich:",pr:"Echte Unterstützung beginnt damit, zu fragen – nicht anzunehmen.\n\nSchreibe auf, wie du künftig konkret fragst, wenn jemand aus deinem Umfeld Diskriminierung erlebt: Welche Worte benutzt du? Was bietest du an? Was vermeidest du zu sagen?",ph:"Wenn jemand Diskriminierung erlebt, sage ich: … Ich biete an: … Ich vermeide zu sagen: …"}
+]});
+
+M.push({t:3,n:7,title:"Antirassismus in sozialen Medien",steps:[
+{y:"q",q:"Was soll man tun, wenn man rassistische Inhalte in sozialen Medien sieht?",a:[{t:"Liken und teilen, um das Problem sichtbar zu machen.",ok:0},{t:"Melden, sachlich kontern und Betroffene unterstützen – ohne sich selbst in Gefahr zu bringen.",ok:1},{t:"Nur melden, wenn man sich sicher fühlt.",ok:0}],fp:"Richtig! Melden, kontern, unterstützen – das sind die drei Säulen des Online-Antirassismus.",fn:"Teilen verbreitet rassistische Inhalte. Melden und kontern sind wirksamer."},
+{y:"q",q:"Warum ist Online-Rassismus besonders gefährlich?",a:[{t:"Weil er im Internet nicht strafbar ist.",ok:0},{t:"Weil er sich schnell verbreitet, algorithmisch verstärkt wird und Betroffene ständig konfrontiert.",ok:1},{t:"Weil er nur von anonymen Nutzer*innen kommt.",ok:0}],fp:"Genau! Online-Rassismus erreicht viele Menschen schnell und kann zu Radikalisierung führen.",fn:"Online-Rassismus ist real wirkender Rassismus – trotz virtueller Umgebung."},
+{y:"m",q:"Wie kann man online antirassistisch handeln? (alle richtigen wählen)",a:[{t:"Rassistische Inhalte auf Plattformen melden",ok:1},{t:"Sachlich mit Fakten kontern",ok:1},{t:"Betroffene öffentlich unterstützen",ok:1},{t:"In Online-Debatten auf Kosten Betroffener 'lernen'",ok:0}],fp:"Richtig! Digitales Ally sein folgt denselben Grundprinzipien wie analoges.",fn:"Online Antirassismus: melden, kontern, stärken – aber nicht auf Kosten Betroffener."},
+{y:"q",q:"Was ist das Problem, wenn man online über Betroffene anstatt mit ihnen spricht?",a:[{t:"Es ist kein Problem, solange man gut gemeint handelt.",ok:0},{t:"Es reproduziert Othering und nimmt Betroffenen die Stimme – statt ihre eigenen Erfahrungen sprechen zu lassen.",ok:1},{t:"Es ist effizienter.",ok:0}],fp:"Richtig! Gut gemeint ist nicht gut genug. Betroffene sprechen für sich selbst – unsere Aufgabe ist, Raum zu schaffen.",fn:"Für andere sprechen kann deren Stimme überschatten. Besser: Raum schaffen und weiterleiten."},
+{y:"r",q:"Mein Auftrag an mich:",pr:"Mein Online-Verhalten ist genauso Teil meiner Haltung wie mein Verhalten im echten Leben.\n\nSchreibe drei konkrete Regeln, nach denen du dein Online-Verhalten ab heute ausrichtest – zum Beispiel: was du meldest, was du nicht teilst, wie du konterst.",ph:"Meine drei Online-Regeln: 1) … 2) … 3) …"}
+]});
+
+M.push({t:3,n:8,title:"Vorbilder & Gemeinschaft",steps:[
+{y:"q",q:"Warum empfiehlt das Ally-Buch, Vorbilder zu suchen?",a:[{t:"Weil man allein nichts erreichen kann.",ok:0},{t:"Weil man sich in eine lange Reihe bedeutender Persönlichkeiten einreiht und von deren Weisheiten lernen kann.",ok:1},{t:"Weil man ihre Methoden kopieren soll.",ok:0}],fp:"Richtig! Das Ally-Buch: 'Du bist nicht allein, sondern fügst dich in eine lange Reihe bedeutender Persönlichkeiten ein.'",fn:"Vorbilder zeigen: Antirassismus hat Geschichte und Gemeinschaft. Man steht nicht allein."},
+{y:"q",q:"Was bedeutet Nelsons Mandelas Zitat für Antirassismus: 'If you want to make peace with your enemy, you have to work with your enemy. Then he becomes your partner'?",a:[{t:"Dass man Rassisten*innen immer vergeben soll.",ok:0},{t:"Dass Veränderung Dialog erfordert – und dass Feinde zu Partner*innen werden können.",ok:1},{t:"Dass Konfrontation immer falsch ist.",ok:0}],fp:"Genau! Das Ally-Buch nutzt dieses Zitat als Aufruf: Wir, die Privilegierten, sollen aufhören, Feinde zu sein und zu Partnern werden.",fn:"Mandelas Zitat ruft zur aktiven Zusammenarbeit auf – aus Gegner*innen können Partner*innen werden."},
+{y:"m",q:"Was sind Quellen für Motivation im Antirassismus? (alle richtigen wählen)",a:[{t:"Das Gefühl, Teil einer Gemeinschaft zu sein",ok:1},{t:"Inspiration durch Vorbilder und ihre Zitate",ok:1},{t:"Das Gefühl, die Welt allein retten zu müssen",ok:0},{t:"Das Wissen, dass jede kleine Handlung zählt",ok:1}],fp:"Richtig! Gemeinschaft, Inspiration und realistische Erwartungen halten die Motivation aufrecht.",fn:"Nachhaltiger Einsatz braucht Gemeinschaft und realistische Erwartungen."},
+{y:"q",q:"Was rät Banksy im Ally-Buch für Momente der Erschöpfung?",a:[{t:"Aufzugeben, wenn es zu schwer wird.",ok:0},{t:"Zu lernen, Pausen einzulegen statt aufzugeben.",ok:1},{t:"Die Erwartungen zu senken.",ok:0}],fp:"Richtig! Pausen sind erlaubt und notwendig. Aufgeben ist es nicht.",fn:"'Wenn du müde bist, lerne eine Pause einzulegen, anstatt aufzugeben.' (Banksy)"},
+{y:"r",q:"Mein Auftrag an mich:",pr:"Vorbilder zeigen uns, was möglich ist. Sie inspirieren uns, weiterzumachen.\n\nSchreibe auf, wen du als Vorbild im Antirassismus siehst – und welchen einen konkreten Grundsatz dieser Person du in dein eigenes Leben übernehmen willst.",ph:"Mein Vorbild ist … Der Grundsatz, den ich übernehme: …"}
+]});
+
+M.push({t:3,n:9,title:"Fehler machen & weitermachen",steps:[
+{y:"q",q:"Was ist die richtige Reaktion, wenn man selbst etwas Rassistisches sagt oder tut?",a:[{t:"Es beschönigen oder erklären, dass man es nicht so gemeint hat.",ok:0},{t:"Es anerkennen, sich entschuldigen, aus dem Fehler lernen und weitermachen.",ok:1},{t:"Sich in Scham verlieren und aufhören, sich zu engagieren.",ok:0}],fp:"Richtig! Das Ally-Buch: 'Lerne aus deinen Fehlern, atme durch und versuche es das nächste Mal besser zu machen.'",fn:"Fehler anerkennen, entschuldigen, lernen, weitermachen – das ist der Weg."},
+{y:"q",q:"Warum führt zu viel Scham zu Passivität?",a:[{t:"Weil Scham ein Zeichen von Schwäche ist.",ok:0},{t:"Weil intensive Scham den Fokus auf sich selbst legt statt auf die Betroffenen – und so Handlung verhindert.",ok:1},{t:"Weil Scham nur Betroffenen zusteht.",ok:0}],fp:"Genau! Kurze Scham ist in Ordnung, aber intensive Selbstbeschäftigung lenkt ab von dem, was zählt: der betroffenen Person.",fn:"Scham ist menschlich – aber sie darf nicht zur Handlungsunfähigkeit führen."},
+{y:"m",q:"Was gehört zum Lernen aus antirassistischen Fehlern? (alle richtigen wählen)",a:[{t:"Fehler offen anerkennen",ok:1},{t:"Verstehen, welchen Schaden man verursacht hat",ok:1},{t:"Von Betroffenen Vergebung einfordern",ok:0},{t:"Das Verhalten konkret ändern",ok:1}],fp:"Richtig! Anerkennen, verstehen, ändern – das ist der Lernprozess. Vergebung ist kein Anspruch.",fn:"Lernen heißt: anerkennen, verstehen, ändern. Vergebung kann man nicht einfordern."},
+{y:"q",q:"Was meint das Ally-Buch: 'Freue dich über deine Einsicht, wenn du einem rassistischen Gedanken erlegen bist'?",a:[{t:"Man soll rassistische Gedanken feiern.",ok:0},{t:"Das Wahrnehmen eines eigenen rassistischen Gedankens ist ein Lernfortschritt – es zeigt, dass man wachsam geworden ist.",ok:1},{t:"Rassistische Gedanken sind normal und akzeptabel.",ok:0}],fp:"Richtig! Das Erkennen ist der erste Schritt. Das Ally-Buch: 'Sie zeigt, dass du etwas gelernt hast. Mach weiter und gib nicht auf.'",fn:"Das Bemerken eines rassistischen Gedankens ist Lernfortschritt – der erste Schritt zur Veränderung."},
+{y:"r",q:"Mein Auftrag an mich:",pr:"Fehler gehören zum Lernen. Was ich daraus mache, zeigt meinen Charakter.\n\nSchreibe auf: Wie gehst du mit deinen eigenen Fehlern um, wenn du etwas Rassistisches sagst oder tust? Formuliere dein persönliches Vorgehen als klare Schritte – für dich selbst.",ph:"Wenn ich einen Fehler mache, tue ich Folgendes: 1) … 2) … 3) …"}
+]});
+
+M.push({t:3,n:10,title:"Mein Weg nach vorne",steps:[
+{y:"q",q:"Was ist der wichtigste Unterschied zwischen 'nicht rassistisch' und 'antirassistisch'?",a:[{t:"Es gibt keinen Unterschied.",ok:0},{t:"'Nicht rassistisch' ist passiv und verändert nichts. 'Antirassistisch' ist aktiv und arbeitet an Veränderung.",ok:1},{t:"Antirassistisch zu sein ist Extremismus.",ok:0}],fp:"Richtig! Das ist die Kernbotschaft aller Materialien: Passivität erhält das System. Aktives Handeln verändert es.",fn:"Passive Korrektheit reicht nicht. Antirassismus ist aktiv."},
+{y:"m",q:"Was hast du in diesem Lernpfad gelernt? (alle richtigen wählen)",a:[{t:"Rassismus ist keine biologische Tatsache, sondern ein politisches Konstrukt",ok:1},{t:"Schweigen signalisiert Akzeptanz",ok:1},{t:"Ally sein bedeutet, perfekt zu sein",ok:0},{t:"Kleine Handlungen im Alltag können die Schulkultur verändern",ok:1}],fp:"Sehr gut! Das sind die zentralen Erkenntnisse des Lernpfads.",fn:"Rassismus ist Konstrukt, Schweigen ist Akzeptanz, Handeln zählt – aber Perfektion ist kein Ziel."},
+{y:"q",q:"Was meint Martin Luther King Jr. mit: 'Der wahre Charakter zeigt sich nicht in Zeiten der Bequemlichkeit, sondern in Momenten der Herausforderung'?",a:[{t:"Dass schwierige Zeiten die Menschen definieren.",ok:0},{t:"Dass antirassistisches Handeln gerade dann zählt, wenn es unbequem ist – und dass Charakter sich in solchen Momenten zeigt.",ok:1},{t:"Dass man immer mutig sein muss.",ok:0}],fp:"Genau! Zivilcourage bedeutet: handeln, auch wenn es schwierig ist. Gerade dann.",fn:"Antirassismus zeigt sich im Unbequemen – nicht in der Theorie, sondern im Handlungsmoment."},
+{y:"q",q:"Was ist das Ziel dieses gesamten Lernpfads?",a:[{t:"Rassismus endgültig zu besiegen.",ok:0},{t:"Wachsamkeit, Reflexion und Handlungsbereitschaft für den Alltag zu entwickeln – als fortlaufende Praxis.",ok:1},{t:"Alle Informationen über Rassismus zu kennen.",ok:0}],fp:"Richtig! Das Ziel ist nicht Wissen, sondern Haltung und Praxis – jeden Tag.",fn:"Wissen allein reicht nicht. Das Ziel ist eine gelebte antirassistische Haltung."},
+{y:"r",q:"Mein Versprechen an mich selbst:",pr:"Du hast alle 30 Module abgeschlossen. Antirassismus ist keine Checkliste – es ist eine Lebenshaltung.\n\nSchreibe dein persönliches Manifest: Wer willst du sein? Was wirst du tun? Was wirst du nicht mehr tun? In drei bis fünf Sätzen, die du jederzeit im Tresor nachlesen kannst.",ph:"Ich bin … Ich werde … Ich werde nicht mehr …"}
+]});
+
+// ============================================================
+// APP LOGIC
+// ============================================================
+
+function setTab(n){
+  curTab=n;
+  [1,2,3].forEach(function(i){
+    document.getElementById('tab'+i).className='tab'+(i===n?' active t'+n:'');
+  });
+  document.getElementById('themeLabel').textContent='Modul wählen – Thema: '+themeNames[n];
+  renderGrid();
+}
+
+function renderGrid(){
+  var g=document.getElementById('modGrid');
+  g.innerHTML='';
+  var mods=M.filter(function(m){return m.t===curTab;});
+  mods.forEach(function(m){
+    var k=m.t+'_'+m.n;
+    var isDone=!!done[k];
+    var d=document.createElement('div');
+    d.className='mc'+(isDone?' done':'');
+    d.innerHTML='<div class="mc-n">'+themeNames[m.t]+' '+m.n+'</div><div class="mc-t">'+m.title+'</div><div class="mc-pill">'+(isDone?'✓ Fertig':m.steps.length+' Aufg.')+'</div>';
+    d.onclick=(function(mod){return function(){startMod(mod);};})(m);
+    g.appendChild(d);
+  });
+}
+
+function upd(){document.getElementById('pts').textContent=score;}
+
+function showView(v){
+  document.getElementById('vHome').style.display=v==='home'?'':'none';
+  document.getElementById('vMod').style.display=v==='mod'?'':'none';
+  document.getElementById('vTresor').style.display=v==='tresor'?'':'none';
+  ['home','tresor'].forEach(function(id){
+    var el=document.getElementById('nb-'+id);
+    if(el)el.className='nav-btn'+(v===id?' active':'');
+  });
+  if(v==='tresor')renderTresor();
+}
+
+function startMod(m){
+  curMod=m;curStep=0;sel={};multiDone=false;
+  showView('mod');
+  document.getElementById('mttl').textContent=themeNames[m.t]+' '+m.n+': '+m.title;
+  render();
+}
+
+function goHome(){
+  showView('home');
+  renderGrid();
+  checkBadges();
+}
+
+function render(){
+  var steps=curMod.steps,tot=steps.length;
+  document.getElementById('mstp').textContent=(curStep+1)+'/'+tot;
+  document.getElementById('pb').style.width=Math.round(curStep/tot*100)+'%';
+  if(curStep>=tot){finMod();return;}
+  var s=steps[curStep],b=document.getElementById('cb');
+  if(s.y==='q'||s.y==='quiz'){
+    b.innerHTML='<div class="qlbl">Aufgabe '+(curStep+1)+'</div><div class="qt">'+s.q+'</div>'+(s.x?'<div class="sc">'+s.x+'</div>':'')+'<div class="clist">'+s.a.map(function(c,i){return'<button class="ch" id="c'+i+'" onclick="pick('+i+')">'+c.t+'</button>';}).join('')+'</div><div id="fb"></div><div class="arow"><button class="btn" id="nb" onclick="nxt()" disabled>Weiter →</button></div>';
+  } else if(s.y==='m'){
+    sel={};multiDone=false;
+    b.innerHTML='<div class="qlbl">Aufgabe '+(curStep+1)+'</div><div class="qt">'+s.q+'</div><div class="mhint">Mehrere Antworten möglich – alle richtigen auswählen</div><div class="clist">'+s.a.map(function(c,i){return'<button class="ch" id="c'+i+'" onclick="tog('+i+')">'+c.t+'</button>';}).join('')+'</div><div id="fb"></div><div class="arow"><button class="btn" id="nb" onclick="chkM()">Prüfen</button></div>';
+  } else {
+    document.getElementById('cb').innerHTML='<div class="qlbl">Aufgabe '+(curStep+1)+' – Mein Handlungsauftrag</div><div class="qt">'+s.q+'</div><div class="sc" style="white-space:pre-line;font-size:.85rem">'+s.pr+'</div><div class="rbox"><textarea id="rt" placeholder="'+s.ph+'"></textarea><div class="rh">Dein Auftrag an dich selbst – wird in deinen Handlungstresor gespeichert.</div></div><div class="arow"><button class="btn" id="nb" onclick="saveReflect()" disabled>In Tresor speichern →</button></div>';
+    document.getElementById('rt').addEventListener('input',function(){document.getElementById('nb').disabled=this.value.trim().length<5;});
+  }
+}
+
+function pick(i){
+  var s=curMod.steps[curStep],ok=s.a[i].ok;
+  document.querySelectorAll('.ch').forEach(function(b){b.disabled=true;});
+  document.getElementById('c'+i).className='ch '+(ok?'ok':'no');
+  if(ok){score+=10;upd();}
+  s.a.forEach(function(c,j){if(c.ok)document.getElementById('c'+j).className='ch ok';});
+  document.getElementById('fb').innerHTML='<div class="fb '+(ok?'pos':'neg')+'">'+(ok?'✓ '+s.fp:'✗ '+s.fn)+'</div>';
+  document.getElementById('nb').disabled=false;
+}
+
+function tog(i){
+  if(multiDone)return;
+  sel[i]=!sel[i];
+  document.getElementById('c'+i).className='ch'+(sel[i]?' sel':'');
+}
+
+function chkM(){
+  if(multiDone){nxt();return;}
+  multiDone=true;
+  var s=curMod.steps[curStep],all=true;
+  s.a.forEach(function(c,j){
+    var b=document.getElementById('c'+j);b.disabled=true;
+    if(c.ok){b.className='ch ok';if(!sel[j])all=false;}
+    else{b.className='ch'+(sel[j]?' no':'');if(sel[j])all=false;}
+  });
+  if(all){score+=10;upd();}
+  document.getElementById('fb').innerHTML='<div class="fb '+(all?'pos':'neu')+'">'+(all?'✓ '+s.fp:'~ '+s.fn)+'</div>';
+  document.getElementById('nb').textContent='Weiter →';
+  document.getElementById('nb').onclick=nxt;
+}
+
+function saveReflect(){
+  var txt=document.getElementById('rt').value.trim();
+  if(txt.length<5)return;
+  tresor.push({
+    mod:themeNames[curMod.t]+' '+curMod.n+': '+curMod.title,
+    q:curMod.steps[curStep].q,
+    text:txt,
+    date:new Date().toLocaleDateString('de-DE'),
+    name:pseudonym||null
+  });
+  nxt();
+}
+
+function nxt(){curStep++;sel={};multiDone=false;render();}
+
+function finMod(){
+  document.getElementById('pb').style.width='100%';
+  var k=curMod.t+'_'+curMod.n;
+  done[k]=true;
+  var msgs={1:'Dein Handlungsauftrag wartet im Tresor auf dich.',2:'Dein Handlungsauftrag ist gespeichert – schau ihn dir immer wieder an.',3:'Dein persönliches Versprechen liegt im Tresor. Halte es lebendig.'};
+  document.getElementById('cb').innerHTML='<div class="done"><div class="done-ic">✅</div><h2>Modul abgeschlossen!</h2><div class="schip">'+score+' Punkte gesamt</div><p>'+msgs[curMod.t]+'</p><div class="arow" style="justify-content:center"><button class="btn s" onclick="goHome()">← Zur Übersicht</button><button class="btn gold" onclick="showView(\'tresor\')">🔐 Tresor öffnen</button></div></div>';
+}
+
+function checkBadges(){
+  var t1done=M.filter(function(m){return m.t===1;}).every(function(m){return done['1_'+m.n];});
+  var t2done=M.filter(function(m){return m.t===2;}).every(function(m){return done['2_'+m.n];});
+  var t3done=M.filter(function(m){return m.t===3;}).every(function(m){return done['3_'+m.n];});
+  if(t1done){document.getElementById('ba1').className='bdg t1 e';}
+  if(t2done){document.getElementById('ba2').className='bdg t2 e';}
+  if(t3done){document.getElementById('ba3').className='bdg t3 e';}
+  if(t1done&&t2done&&t3done){document.getElementById('ba4').className='bdg all e';}
+  var tip=document.getElementById('htip');
+  if(t1done&&t2done&&t3done){tip.textContent='🌈 Alle 30 Module abgeschlossen! Du hast den vollen Lernpfad gemeistert.';}
+  else if(t1done&&t2done){tip.textContent='Nur noch Thema 3 (Handeln) fehlt – du schaffst das!';}
+  else if(t1done){tip.textContent='Thema 1 abgeschlossen! Weiter mit Thema 2 (Reflektieren).';}
+}
+
+function renderTresor(){
+  var c=document.getElementById('tresorEntries');
+  var cnt=document.getElementById('tresorCount');
+  var empty=document.getElementById('tresorEmpty');
+  // update header with pseudonym if set
+  var hdr=document.getElementById('tresorOwner');
+  if(hdr)hdr.textContent=pseudonym?'Tresor von '+pseudonym:'Meine Einträge';
+  cnt.textContent=tresor.length+' '+(tresor.length===1?'Eintrag':'Einträge');
+  if(tresor.length===0){empty.style.display='';c.innerHTML='<div class="tresor-empty" id="tresorEmpty">Noch keine Einträge. Schließe die Handlungsaufgaben in den Modulen ab – deine persönlichen Vorsätze und Versprechen an dich selbst erscheinen hier.</div>';return;}
+  empty&&(empty.style.display='none');
+  c.innerHTML=tresor.map(function(e,i){
+    return'<div class="tresor-entry"><div class="tresor-meta"><span class="tresor-tag">'+e.mod+'</span><span>'+e.date+'</span><button class="tresor-del" onclick="delEntry('+i+')">✕ löschen</button></div><div style="font-size:.78rem;color:var(--tx3);margin-bottom:.35rem;font-style:italic">'+e.q+'</div><div class="tresor-text">'+escHtml(e.text)+'</div></div>';
+  }).join('');
+}
+
+function delEntry(i){tresor.splice(i,1);renderTresor();}
+
+function escHtml(t){return t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+
+// Init
+renderGrid();
+upd();
+</script>
+</body>
+</html>
